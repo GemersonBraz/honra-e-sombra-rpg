@@ -1,0 +1,156 @@
+/**
+ * Animações do Sistema Honra e Sombra
+ * Arquivo separado para todas as animações CSS do site
+ */
+
+/* ===== ANIMAÇÕES PRINCIPAIS ===== */
+
+/* Animação de entrada - Usado em cards e seções */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animação flutuante - Usado no logo principal da homepage */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Animação de pulsação - Usado em elementos de destaque */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Animação de bounce - Usado nas bolinhas decorativas */
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+
+    50% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+/* Animação de rotação - Uso geral */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== CLASSES DE ANIMAÇÃO ===== */
+
+/* Entrada suave para cards e seções */
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Movimento flutuante para logo */
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Pulsação para elementos de destaque */
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Bounce para elementos decorativos */
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+/* Rotação para spinners e loading */
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* ===== ANIMAÇÕES DE HOVER ===== */
+
+/* Hover com escala - Usado em cards e botões */
+.hover-scale:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Hover com movimento vertical - Usado em botões */
+.hover-lift:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* ===== TRANSIÇÕES GLOBAIS ===== */
+
+/* Transição suave para todos os elementos - Usado globalmente */
+.smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Transição rápida para interações */
+.fast-transition {
+    transition: all 0.15s ease-out;
+}
+
+/* Transição lenta para elementos importantes */
+.slow-transition {
+    transition: all 0.6s ease-in-out;
+}
+
+/* ===== ANIMAÇÕES RESPONSIVAS ===== */
+
+/* Reduzir animações em mobile para performance */
+@media (max-width: 768px) {
+    .animate-float {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    .animate-bounce {
+        animation: bounce 1.5s infinite;
+    }
+}
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .animate-float,
+    .animate-bounce,
+    .animate-pulse {
+        animation: none;
+    }
+}

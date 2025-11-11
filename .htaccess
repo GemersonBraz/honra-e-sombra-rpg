@@ -1,0 +1,15 @@
+DirectoryIndex index.html index.php
+
+# Redirecionar tudo para public/index.php se o arquivo/diretório não existir
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ public/index.php [QSA,L]
+</IfModule>
+
+# Se mod_rewrite não estiver disponível, mostrar link para acesso direto
+<IfModule !mod_rewrite.c>
+    # Se mod_rewrite não estiver habilitado
+    RedirectMatch 307 ^/$ /public/index.php
+</IfModule>

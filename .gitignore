@@ -1,0 +1,33 @@
+# Arquivos e pastas para ignorar
+
+# Configurações locais
+config/db.php
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+tmp/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependências (se usar Composer)
+vendor/
+
+# Uploads de usuário
+uploads/
+user-data/
+
+# Backup
+backup/
+*.sql.bak

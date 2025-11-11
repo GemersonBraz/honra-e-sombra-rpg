@@ -1,0 +1,641 @@
+/**
+ * Sistema de Temas Simples - Honra e Sombra
+ * Arquivo mestre que controla todas as cores do site
+ * Para mudar cores: edite apenas este arquivo!
+ * 
+ * 🎨 PERSONALIZAÇÕES RÁPIDAS:
+ * - Para mudar fundo geral: altere --background
+ * - Para mudar cor dos cards: altere --surface  
+ * - Para mudar cores principais: altere --primary, --secondary, --accent
+ * 
+ * 💡 CORES ATUAIS DO TEMA HONRA:
+ * - Background: 245 222 179 (wheat - cor de areia)
+ * - Surface: 250 235 215 (antique white - cards mais quentes)
+ * - Primary: 184 134 11 (amber-600 - dourado) 
+ * - Secondary: 139 69 19 (saddle brown - marrom)
+ * - Accent: 160 82 45 (sienna - destaque)
+ */
+
+:root {
+    /* ===== TEMA PADRÃO (HONRA - CLARO) ===== */
+
+    /* Cores principais que mudam com tema */
+    --primary: 184 134 11;
+    /* amber-600 - Dourado principal (ORIGINAL) */
+    --secondary: 139 69 19;
+    /* saddle brown - Marrom secundário */
+    --accent: 160 82 45;
+    /* sienna - Cor de destaque */
+    --surface: 250 235 215;
+    /* antique white - Fundo dos cards mais quente */
+    --background: 245 222 179;
+    /* wheat - Fundo geral cor de areia */
+    --text: 78 74 73;
+    /* stone-600 - Texto principal mais escuro */
+    --text-secondary: 120 113 108;
+    /* stone-500 - Texto secundário */
+    --text-muted: 168 162 158;
+    /* stone-400 - Texto discreto */
+    --text-nav: 255 255 255;
+    /* white - Texto navbar */
+
+    /* Cores específicas de iconografia */
+    --icon-color: 120 113 108;
+    /* stone-500 - Ícones marrons no tema claro */
+    --icon-hover: 78 74 73;
+    /* stone-600 - Ícones ao hover */
+
+    /* Cores de status (fixas) */
+    --success: 34 197 94;
+    /* green-500 */
+    --warning: 249 115 22;
+    /* orange-500 */
+    --error: 239 68 68;
+    /* red-500 */
+    --info: 59 130 246;
+    /* blue-500 */
+
+    /* Bordas e sombras */
+    --border: 222 184 135;
+    /* burlywood - Borda que combina com tema areia */
+    --border-light: 245 222 179;
+    /* wheat - Borda clara */
+    --shadow: 0 4px 6px -1px rgba(139, 69, 19, 0.1), 0 2px 4px -1px rgba(139, 69, 19, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(139, 69, 19, 0.1), 0 4px 6px -2px rgba(139, 69, 19, 0.05);
+}
+
+/* ===== TEMA SOMBRA (ESCURO) ===== */
+[data-theme="sombra"] {
+    /* Cores principais invertidas */
+    --primary: 15 23 42;
+    /* slate-900 - Azul escuro como os cards */
+    --secondary: 30 41 59;
+    /* slate-800 - Tom um pouco mais claro */
+    --accent: 52 211 153;
+    /* emerald-400 - Verde como destaque */
+    --surface: 15 23 42;
+    /* slate-900 - Fundo dos cards */
+    --background: 2 6 23;
+    /* slate-950 - Fundo geral */
+    --text: 241 245 249;
+    /* slate-100 - Texto principal */
+    --text-secondary: 203 213 225;
+    /* slate-300 - Texto secundário */
+    --text-muted: 148 163 184;
+    /* slate-400 - Texto discreto */
+    --text-nav: 241 245 249;
+    /* slate-100 - Texto navbar */
+
+    /* Cores específicas de iconografia */
+    --icon-color: 148 163 184;
+    /* slate-400 - Ícones claros no tema escuro */
+    --icon-hover: 203 213 225;
+    /* slate-300 - Ícones ao hover */
+
+    /* Bordas escuras */
+    --border: 55 65 81;
+    /* gray-700 */
+    --border-light: 75 85 99;
+    /* gray-600 */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== CLASSES CUSTOMIZADAS (usar no lugar das Tailwind quando necessário) ===== */
+
+/* Fundos */
+.bg-primary {
+    background-color: rgb(var(--primary));
+}
+
+.bg-secondary {
+    background-color: rgb(var(--secondary));
+}
+
+.bg-accent {
+    background-color: rgb(var(--accent));
+}
+
+/* Fundos com transparência para os cards */
+.bg-primary\/10 {
+    background-color: rgb(var(--primary) / 0.1);
+}
+
+.bg-primary\/20 {
+    background-color: rgb(var(--primary) / 0.2);
+}
+
+.bg-secondary\/10 {
+    background-color: rgb(var(--secondary) / 0.1);
+}
+
+.bg-secondary\/20 {
+    background-color: rgb(var(--secondary) / 0.2);
+}
+
+.bg-accent\/10 {
+    background-color: rgb(var(--accent) / 0.1);
+}
+
+.bg-accent\/20 {
+    background-color: rgb(var(--accent) / 0.2);
+}
+
+/* Classes para fundos no hover */
+.hover\:bg-primary\/20:hover {
+    background-color: rgb(var(--primary) / 0.2);
+}
+
+.hover\:bg-secondary\/20:hover {
+    background-color: rgb(var(--secondary) / 0.2);
+}
+
+.hover\:bg-accent\/20:hover {
+    background-color: rgb(var(--accent) / 0.2);
+}
+
+/* Classes para bordas no hover */
+.hover\:border-primary:hover {
+    border-color: rgb(var(--primary));
+}
+
+.hover\:border-secondary:hover {
+    border-color: rgb(var(--secondary));
+}
+
+.hover\:border-accent:hover {
+    border-color: rgb(var(--accent));
+}
+
+/* Classes para texto dos botões */
+.text-primary {
+    color: rgb(var(--primary));
+}
+
+.text-secondary {
+    color: rgb(var(--secondary));
+}
+
+.text-accent {
+    color: rgb(var(--accent));
+}
+
+.hover\:text-primary:hover {
+    color: rgb(var(--primary));
+}
+
+.hover\:text-secondary:hover {
+    color: rgb(var(--secondary));
+}
+
+.hover\:text-accent:hover {
+    color: rgb(var(--accent));
+}
+
+.bg-surface {
+    background-color: rgb(var(--surface));
+}
+
+.bg-background {
+    background-color: rgb(var(--background));
+}
+
+/* Textos */
+.text-theme-primary {
+    color: rgb(var(--primary));
+}
+
+.text-theme-secondary {
+    color: rgb(var(--secondary));
+}
+
+.text-accent {
+    color: rgb(var(--accent));
+}
+
+.text-nav {
+    color: rgb(var(--text-nav));
+}
+
+/* Ícones temáticos */
+.icon-primary {
+    filter: brightness(0) saturate(100%) invert(41%) sepia(8%) saturate(1055%) hue-rotate(352deg) brightness(94%) contrast(91%);
+}
+
+[data-theme="sombra"] .icon-primary {
+    filter: brightness(0) saturate(100%) invert(68%) sepia(11%) saturate(934%) hue-rotate(194deg) brightness(93%) contrast(86%);
+}
+
+/* Botão primário específico para tema escuro */
+[data-theme="sombra"] .btn-primary {
+    background-color: rgb(var(--primary));
+    border: 2px solid rgb(55 65 81);
+    /* gray-700 - borda mais sutil no tema escuro */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    /* sombra mais intensa no escuro */
+}
+
+[data-theme="sombra"] .btn-primary:hover {
+    background-color: rgb(var(--primary) / 0.8);
+    border-color: rgb(75 85 99);
+    /* gray-600 - borda mais clara no hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Botão secundário específico para tema escuro */
+[data-theme="sombra"] .btn-secondary {
+    background-color: rgb(var(--secondary));
+    border: 2px solid rgb(55 65 81);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="sombra"] .btn-secondary:hover {
+    background-color: rgb(var(--secondary) / 0.8);
+    border-color: rgb(75 85 99);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Botão outline específico para tema escuro */
+[data-theme="sombra"] .btn-outline {
+    border: 2px solid rgb(55 65 81);
+    color: rgb(var(--text));
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="sombra"] .btn-outline:hover {
+    background-color: rgb(var(--surface));
+    border-color: rgb(var(--accent));
+    /* usa accent (verde) como destaque */
+    color: rgb(var(--accent));
+    box-shadow: 0 4px 8px rgba(52, 211, 153, 0.2);
+    /* sombra com cor do accent */
+}
+
+.icon-secondary {
+    filter: brightness(0) saturate(100%) invert(76%) sepia(45%) saturate(2467%) hue-rotate(99deg) brightness(96%) contrast(87%);
+}
+
+.icon-accent {
+    filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+}
+
+.icon-purple {
+    filter: brightness(0) saturate(100%) invert(60%) sepia(99%) saturate(4872%) hue-rotate(252deg) brightness(100%) contrast(101%);
+}
+
+.icon-white {
+    filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.icon-muted {
+    filter: brightness(0) saturate(100%) invert(67%) sepia(7%) saturate(514%) hue-rotate(354deg) brightness(94%) contrast(88%);
+}
+
+/* Bordas */
+.border-primary {
+    border-color: rgb(var(--primary));
+}
+
+.border-secondary {
+    border-color: rgb(var(--secondary));
+}
+
+.border-surface {
+    border-color: rgb(var(--border));
+}
+
+.border-light {
+    border-color: rgb(var(--border-light));
+}
+
+/* Bordas laterais coloridas */
+.border-l-primary {
+    border-left: 4px solid rgb(var(--primary));
+}
+
+.border-l-secondary {
+    border-left: 4px solid rgb(var(--secondary));
+}
+
+.border-l-success {
+    border-left: 4px solid rgb(var(--success));
+}
+
+.border-l-warning {
+    border-left: 4px solid rgb(var(--warning));
+}
+
+.border-l-error {
+    border-left: 4px solid rgb(var(--error));
+}
+
+.border-l-info {
+    border-left: 4px solid rgb(var(--info));
+}
+
+/* Hover states */
+.hover-surface:hover {
+    background-color: rgb(var(--surface));
+}
+
+.hover-primary:hover {
+    background-color: rgb(var(--primary));
+}
+
+/* ===== COMPONENTES REUTILIZÁVEIS ===== */
+
+/* Card base com bordas arredondadas e sombra sutil */
+.card {
+    background-color: rgb(var(--surface));
+    color: rgb(var(--text));
+    border: 1px solid rgb(var(--border));
+    border-radius: 0.75rem;
+    /* rounded-xl */
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    /* p-6 */
+    transition: all 0.3s ease;
+    min-height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* Card com borda lateral colorida */
+.card-bordered {
+    background-color: rgb(var(--surface));
+    color: rgb(var(--text));
+    border: 1px solid rgb(var(--border));
+    border-radius: 0.75rem;
+    /* rounded-xl */
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    /* p-6 */
+    transition: all 0.3s ease;
+    min-height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.card-bordered:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* Botões */
+.btn-primary {
+    background-color: rgb(var(--primary));
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border: 2px solid rgb(var(--primary));
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgb(var(--primary) / 0.2);
+}
+
+.btn-primary:hover {
+    background-color: rgb(var(--primary) / 0.9);
+    border-color: rgb(var(--primary) / 0.8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgb(var(--primary) / 0.3);
+}
+
+.btn-secondary {
+    background-color: rgb(var(--secondary));
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border: 2px solid rgb(var(--secondary));
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgb(var(--secondary) / 0.2);
+}
+
+.btn-secondary:hover {
+    background-color: rgb(var(--secondary) / 0.9);
+    border-color: rgb(var(--secondary) / 0.8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgb(var(--secondary) / 0.3);
+}
+
+.btn-outline {
+    border: 2px solid rgb(var(--border));
+    color: rgb(var(--text));
+    background: transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgb(var(--border) / 0.2);
+}
+
+.btn-outline:hover {
+    background-color: rgb(var(--surface));
+    border-color: rgb(var(--primary));
+    color: rgb(var(--primary));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgb(var(--primary) / 0.2);
+}
+
+/* Botão de tema circular */
+.theme-toggle {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: rgb(var(--surface));
+    color: rgb(var(--text));
+    border: 2px solid rgb(var(--border));
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 50;
+}
+
+.theme-toggle:hover {
+    background-color: rgb(var(--primary));
+    color: rgb(var(--text-nav));
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+    border-color: rgb(var(--primary));
+}
+
+/* ===== UTILITÁRIOS ===== */
+
+/* Formulários */
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgb(var(--border));
+    border-radius: 0.5rem;
+    background-color: rgb(var(--surface));
+    color: rgb(var(--text));
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: rgb(var(--primary));
+    box-shadow: 0 0 0 3px rgb(var(--primary) / 0.1);
+}
+
+.form-input::placeholder {
+    color: rgb(var(--text-muted));
+}
+
+/* Transições suaves */
+.smooth-transition {
+    transition: all 0.3s ease;
+}
+
+/* Sombras temáticas */
+.shadow-themed {
+    box-shadow: 0 4px 6px rgba(var(--primary) / 0.1);
+}
+
+.shadow-themed-lg {
+    box-shadow: 0 10px 15px rgba(var(--primary) / 0.1);
+}
+
+/* Espaçamentos específicos para cards */
+.card-content {
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+    color: rgb(var(--text));
+}
+
+.card-description {
+    color: rgb(var(--text-secondary));
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+/* Melhorias para fontes */
+.font-title {
+    font-family: 'Cinzel', serif;
+    color: rgb(var(--text));
+}
+
+.font-heading {
+    font-family: 'Crimson Text', serif;
+    color: rgb(var(--text-secondary));
+}
+
+.font-decorative {
+    font-family: 'Uncial Antiqua', cursive;
+}
+
+/* ===== RESPONSIVIDADE E ANIMAÇÕES ===== */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
+
+    .theme-toggle {
+        bottom: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* Transições suaves para troca de tema */
+*,
+*::before,
+*::after {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+
+/* Mobile menu animations */
+.mobile-menu {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.mobile-menu.open {
+    transform: translateY(0);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(var(--border));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--primary) / 0.7);
+}
+
+/* Respeitar preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus states melhorados */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid rgb(var(--primary) / 0.5);
+    outline-offset: 2px;
+}

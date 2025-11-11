@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="honra">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Componentes - Honra e Sombra</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <link href="../css/themes.css" rel="stylesheet">
+    <link href="../css/animations.css" rel="stylesheet">
+</head>
+
+<body class="bg-background text-text min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-surface border-b border-border shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <img src="../img/icons-1x1/lorc/dragon-head.svg" alt="Honra e Sombra" class="w-8 h-8 icon-primary">
+                    <span class="font-title text-xl font-bold text-primary">Sistema de Componentes</span>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <button id="themeToggle" class="btn-outline text-sm">
+                        Alternar Tema
+                    </button>
+                    <a href="../../public/index.php"
+                        class="text-primary hover:text-accent transition-colors text-sm font-medium">
+                        Voltar ao Sistema
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="bg-background min-h-screen">
+        <div class="container mx-auto px-4 py-8">
+
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="font-title text-4xl font-bold text-primary mb-4">Sistema de Componentes RPG</h1>
+                <p class="font-heading text-lg text-text/70 max-w-3xl mx-auto">
+                    Documentação visual de todos os componentes disponíveis no sistema Honra e Sombra.
+                    Os componentes PHP estão em <code
+                        class="bg-surface px-2 py-1 rounded text-sm">app/components/RPGComponents.php</code>
+                </p>
+            </div>
+
+            <!-- Cards de Funcionalidade (Principal) -->
+            <section class="card p-8 mb-8">
+                <h2 class="font-title text-2xl font-bold text-primary mb-6">Cards de Funcionalidade
+                    (RPGComponents::featureCard)</h2>
+                <p class="text-text/60 text-sm mb-6">Componentes principais usados na home e dashboard</p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Exemplo Primary -->
+                    <div
+                        class="text-center space-y-4 p-6 rounded-lg bg-surface/50 border border-border hover:border-yellow-600 transition-all">
+                        <div
+                            class="w-16 h-16 mx-auto bg-yellow-500/10 rounded-full flex items-center justify-center hover:bg-yellow-500/20 hover:scale-110 transition-all">
+                            <img src="../img/icons-1x1/lorc/crossed-swords.svg" alt="Classes"
+                                class="w-8 h-8 icon-primary hover:scale-110 transition-transform">
+                        </div>
+                        <h3 class="font-heading text-lg font-semibold text-primary">9 Classes Únicas</h3>
+                        <p class="text-text/70 text-sm">
+                            Desde o furtivo Ninja até o poderoso Mago
+                        </p>
+                        <button
+                            class="text-yellow-600 hover:text-yellow-500 font-heading font-medium text-sm transition-colors">
+                            Ver Classes →
+                        </button>
+                    </div>
+
+                    <!-- Exemplo Secondary -->
+                    <div
+                        class="text-center space-y-4 p-6 rounded-lg bg-surface/50 border border-border hover:border-emerald-500 transition-all">
+                        <div
+                            class="w-16 h-16 mx-auto bg-emerald-500/10 rounded-full flex items-center justify-center hover:bg-emerald-500/20 hover:scale-110 transition-all">
+                            <img src="../img/icons-1x1/lorc/fire-ring.svg" alt="Elementos"
+                                class="w-8 h-8 icon-secondary hover:scale-110 transition-transform">
+                        </div>
+                        <h3 class="font-heading text-lg font-semibold text-primary">5 Elementos</h3>
+                        <p class="text-text/70 text-sm">
+                            Fogo, Água, Terra, Ar e Vazio para magias
+                        </p>
+                        <button
+                            class="text-emerald-600 hover:text-emerald-500 font-heading font-medium text-sm transition-colors">
+                            Ver Elementos →
+                        </button>
+                    </div>
+
+                    <!-- Exemplo Accent -->
+                    <div
+                        class="text-center space-y-4 p-6 rounded-lg bg-surface/50 border border-border hover:border-red-500 transition-all">
+                        <div
+                            class="w-16 h-16 mx-auto bg-red-500/10 rounded-full flex items-center justify-center hover:bg-red-500/20 hover:scale-110 transition-all">
+                            <img src="../img/icons-1x1/lorc/dragon-head.svg" alt="Bestiário"
+                                class="w-8 h-8 icon-accent hover:scale-110 transition-transform">
+                        </div>
+                        <h3 class="font-heading text-lg font-semibold text-primary">Bestiário</h3>
+                        <p class="text-text/70 text-sm">
+                            Criaturas místicas e monstros orientais
+                        </p>
+                        <button
+                            class="text-red-600 hover:text-red-500 font-heading font-medium text-sm transition-colors">
+                            Ver Bestiário →
+                        </button>
+                    </div>
+
+                    <!-- Exemplo Purple -->
+                    <div
+                        class="text-center space-y-4 p-6 rounded-lg bg-surface/50 border border-border hover:border-purple-500 transition-all">
+                        <div
+                            class="w-16 h-16 mx-auto bg-purple-500/10 rounded-full flex items-center justify-center hover:bg-purple-500/20 hover:scale-110 transition-all">
+                            <img src="../img/icons-1x1/lorc/wizard-staff.svg" alt="Magias"
+                                class="w-8 h-8 icon-purple hover:scale-110 transition-transform">
+                        </div>
+                        <h3 class="font-heading text-lg font-semibold text-primary">Sistema de Magias</h3>
+                        <p class="text-text/70 text-sm">
+                            Magias permanentes e temporárias únicas
+                        </p>
+                        <button
+                            class="text-purple-600 hover:text-purple-500 font-heading font-medium text-sm transition-colors">
+                            Ver Magias →
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cards Básicos -->
+            <section class="card p-8 mb-8">
+                <h2 class="font-title text-2xl font-bold text-primary mb-6">Cartões (RPGComponents::card/featureCard)
+                </h2>
+
+                <div class="mb-8">
+                    <h4 class="font-heading text-lg font-semibold text-primary mb-4">Card Simples</h4>
+                    <div class="card p-6 max-w-sm">
+                        <h3 class="font-title text-lg font-semibold text-primary mb-2">Título do Cartão</h3>
+                        <p class="text-text/70">Conteúdo do cartão com exemplo de texto explicativo.</p>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h4 class="font-heading text-lg font-semibold text-primary mb-4">Feature Cards</h4>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="card p-6 hover:bg-primary/5 transition-all duration-300 group">
+                            <div class="flex items-center mb-4">
+                                <div class="icon-container mr-4">
+                                    <img src="../img/icons-1x1/lorc/crossed-swords.svg" alt="Combate"
+                                        class="w-8 h-8 icon-primary group-hover:icon-accent transition-colors duration-300">
+                                </div>
+                                <h3 class="font-title text-lg font-semibold text-primary">Sistema de Combate</h3>
+                            </div>
+                            <p class="text-text/70">Combate tático com múltiplas opções e estratégias.</p>
+                        </div>
+
+                        <div class="card p-6 hover:bg-primary/5 transition-all duration-300 group">
+                            <div class="flex items-center mb-4">
+                                <div class="icon-container mr-4">
+                                    <img src="../img/icons-1x1/lorc/character-sheet.svg" alt="Personagem"
+                                        class="w-8 h-8 icon-secondary group-hover:icon-accent transition-colors duration-300">
+                                </div>
+                                <h3 class="font-title text-lg font-semibold text-primary">Criação de Personagem</h3>
+                            </div>
+                            <p class="text-text/70">Sistema completo de criação e desenvolvimento.</p>
+                        </div>
+
+                        <div class="card p-6 hover:bg-primary/5 transition-all duration-300 group">
+                            <div class="flex items-center mb-4">
+                                <div class="icon-container mr-4">
+                                    <img src="../img/icons-1x1/lorc/scroll-unfurled.svg" alt="História"
+                                        class="w-8 h-8 icon-accent group-hover:icon-accent transition-colors duration-300">
+                                </div>
+                                <h3 class="font-title text-lg font-semibold text-primary">Narrativa Rica</h3>
+                            </div>
+                            <p class="text-text/70">Histórias profundas e envolventes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Card Simples -->
+                    <div class="card">
+                        <h3 class="card-title">Card Básico</h3>
+                        <p class="card-description">Este é um card básico usando a classe .card com título e descrição
+                            padrão.</p>
+                    </div>
+
+                    <!-- Card com Ação -->
+                    <div class="card">
+                        <h3 class="card-title">Card com Botão</h3>
+                        <p class="card-description">Card com botão de ação integrado usando as classes btn-*</p>
+                        <button class="btn-primary mt-4">Ação Principal</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cards de Estatística -->
+            <section class="card p-8 mb-8">
+                <h2 class="font-title text-2xl font-bold text-primary mb-6">Cards de Estatística
+                    (RPGComponents::statCard)</h2>
+                <p class="text-text/60 text-sm mb-6">Cards com bordas laterais coloridas para exibir métricas</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card border-l-4 border-primary text-center">
+                        <div class="text-3xl font-bold text-accent mb-2">150</div>
+                        <h4 class="card-title mb-1">Usuários</h4>
+                        <p class="text-text/60 text-sm">Total cadastrados</p>
+                    </div>
+                    <div class="card border-l-4 border-secondary text-center">
+                        <div class="text-3xl font-bold text-accent mb-2">89</div>
+                        <h4 class="card-title mb-1">Personagens</h4>
+                        <p class="text-text/60 text-sm">Ativos no sistema</p>
+                    </div>
+                    <div class="card border-l-4 border-accent text-center">
+                        <div class="text-3xl font-bold text-accent mb-2">25</div>
+                        <h4 class="card-title mb-1">Sessões</h4>
+                        <p class="text-text/60 text-sm">Em andamento</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Botões -->
+            <section class="card p-8 mb-8">
+                <h2 class="font-title text-2xl font-bold text-primary mb-6">Botões (RPGComponents::button)</h2>
+
+                <div class="mb-6">
+                    <h4 class="font-heading text-lg font-semibold text-primary mb-4">Tipos de Botões</h4>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="btn-primary">Botão Principal</button>
+                        <button class="btn-secondary">Botão Secundário</button>
+                        <button class="btn-outline">Botão Outline</button>
+                        <button class="btn-primary opacity-50 cursor-not-allowed" disabled>Desabilitado</button>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h4 class="font-heading text-lg font-semibold text-primary mb-4">Botões com Ícones</h4>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="btn-primary inline-flex items-center gap-2">
+                            <img src="../img/icons-1x1/lorc/crossed-swords.svg" alt="" class="w-4 h-4 icon-white">
+                            Com Ícone
+                        </button>
+                        <button class="btn-secondary inline-flex items-center gap-2">
+                            <img src="../img/icons-1x1/lorc/key.svg" alt="" class="w-4 h-4 icon-white">
+                            Configurar
+                        </button>
+                        <button class="btn-outline inline-flex items-center gap-2">
+                            <img src="../img/icons-1x1/lorc/scroll-unfurled.svg" alt="" class="w-4 h-4 icon-muted">
+                            Documentos
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-heading text-lg font-semibold text-primary mb-4">Sistema de Ícones</h4>
+                    <p class="text-text/70 text-sm mb-4">Ícones com filtros automáticos baseados no tema:</p>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <div class="flex items-center gap-2">
+                            <img src="../img/icons-1x1/lorc/crowned-skull.svg" alt="Icon" class="w-6 h-6 icon-primary">
+                            <span class="text-xs text-text/60">icon-primary</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="../img/icons-1x1/lorc/battle-axe.svg" alt="Icon" class="w-6 h-6 icon-secondary">
+                            <span class="text-xs text-text/60">icon-secondary</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="../img/icons-1x1/lorc/scroll-unfurled.svg" alt="Icon" class="w-6 h-6 icon-accent">
+                            <span class="text-xs text-text/60">icon-accent</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="../img/icons-1x1/lorc/wizard-staff.svg" alt="Icon" class="w-6 h-6 icon-purple">
+                            <span class="text-xs text-text/60">icon-purple</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alertas/Avisos -->
+            <section class="card p-8 mb-8">
+                <h2 class="font-title text-2xl font-bold text-primary mb-6">Alertas (RPGComponents::alert)</h2>
+
+                <div class="space-y-4">
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+                        <strong>Sucesso!</strong> Operação realizada com sucesso.
+                    </div>
+                    <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-lg">
+                        <strong>Atenção!</strong> Verifique as informações antes de continuar.
+                    </div>
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                        <strong>Erro!</strong> Ocorreu um problema durante a operação.
+                    </div>
+                    <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg">
+                        <strong>Informação:</strong> Esta é uma mensagem informativa.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formulários -->
+            <section class="card p-8 mb-8">
+                <h2 class="font-title text-2xl font-bold text-primary mb-6">Formulários</h2>
+                <p class="text-text/60 text-sm mb-6">Usando classe .form-input para inputs padronizados</p>
+
+                <div class="max-w-md">
+                    <h3 class="font-title text-lg font-semibold text-primary mb-4">Formulário de Exemplo</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-text font-medium mb-2">Nome</label>
+                            <input type="text" class="form-input" placeholder="Digite seu nome">
+                        </div>
+                        <div>
+                            <label class="block text-text font-medium mb-2">Email</label>
+                            <input type="email" class="form-input" placeholder="Digite seu email">
+                        </div>
+                        <div>
+                            <label class="block text-text font-medium mb-2">Mensagem</label>
+                            <textarea class="form-input" rows="3" placeholder="Digite sua mensagem"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full">Enviar</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Classes CSS de Utilidade -->
+            <section class="card p-8 mb-8">
+                <h2 class="font-title text-2xl font-bold text-primary mb-6">Classes CSS Principais</h2>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-title text-lg font-semibold text-primary mb-4">Sistema de Classes</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-heading font-semibold text-text mb-3">Componentes:</h4>
+                                <ul class="space-y-2 text-sm text-text/70">
+                                    <li class="flex items-center gap-2">
+                                        <code class="bg-surface px-2 py-1 rounded text-xs">.card</code>
+                                        <span>Container básico de card</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <code class="bg-surface px-2 py-1 rounded text-xs">.card-title</code>
+                                        <span>Título do card</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <code class="bg-surface px-2 py-1 rounded text-xs">.btn-primary</code>
+                                        <span>Botões principais</span>
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <code class="bg-surface px-2 py-1 rounded text-xs">.form-input</code>
+                                        <span>Inputs de formulário</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 class="font-heading font-semibold text-text mb-3">Ícones:</h4>
+                                <ul class="space-y-2 text-sm text-text/70">
+                                    <li class="flex items-center gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <img src="../img/icons-1x1/lorc/crowned-skull.svg" alt=""
+                                                class="w-4 h-4 icon-primary">
+                                            <code class="bg-surface px-2 py-1 rounded text-xs">.icon-primary</code>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <img src="../img/icons-1x1/lorc/battle-axe.svg" alt=""
+                                                class="w-4 h-4 icon-secondary">
+                                            <code class="bg-surface px-2 py-1 rounded text-xs">.icon-secondary</code>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <img src="../img/icons-1x1/lorc/dragon-head.svg" alt=""
+                                                class="w-4 h-4 icon-accent">
+                                            <code class="bg-surface px-2 py-1 rounded text-xs">.icon-accent</code>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-center gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <img src="../img/icons-1x1/lorc/wizard-staff.svg" alt=""
+                                                class="w-4 h-4 icon-purple">
+                                            <code class="bg-surface px-2 py-1 rounded text-xs">.icon-purple</code>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <script src="../js/theme.js"></script>
+        <script>
+            // Inicializar sistema de temas
+            const themeSystem = new ThemeSystem();
+            const toggleBtn = document.getElementById('themeToggle');
+
+            // Atualizar texto do botão baseado no tema atual
+            function updateToggleText() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                toggleBtn.textContent = currentTheme === 'honra' ? 'Alternar para Sombra' : 'Alternar para Honra';
+            }
+
+            // Event listener para o botão
+            toggleBtn.addEventListener('click', () => {
+                themeSystem.toggleTheme();
+                updateToggleText();
+            });
+
+            // Atualizar texto inicial
+            updateToggleText();
+        </script>
+</body>
+
+</html>
