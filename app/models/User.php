@@ -11,6 +11,28 @@ class User {
     public function __construct() {
         $this->db = getDB();
     }
+
+    /**
+     * Atualiza o caminho do avatar do usuário
+     * @param int $userId
+     * @param string $avatarPath Caminho relativo dentro de /public (ex.: img/avatars/uploads/xxx.png)
+     * @return array {success: bool, message?: string}
+     */
+    public function updateAvatar(int $userId, string $avatarPath): array {
+        try {
+            $stmt = $this->db->prepare("UPDATE users SET avatar = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND ativo = 1");
+            $ok = $stmt->execute([$avatarPath, $userId]);
+            if ($ok) {
+                // Atualiza sessão para refletir imediatamente
+                $_SESSION['user_avatar'] = $avatarPath;
+                return ['success' => true];
+            }
+            return ['success' => false, 'message' => 'Não foi possível atualizar o avatar'];
+        } catch (Exception $e) {
+            // Provavelmente a coluna 'avatar' não existe ainda
+            return ['success' => false, 'message' => 'Falha ao atualizar avatar (execute a migração para adicionar a coluna avatar).'];
+        }
+    }
     
     /**
      * Criar novo usuário
