@@ -18,7 +18,7 @@ $user = new User();
         
         <div class="theme-bg-surface rounded-xl p-8 mb-8 theme-transition border-l-4 border-red-500">
             <h1 class="font-title text-3xl font-bold theme-text-primary flex items-center gap-3">
-                <img src="img/icons-1x1/lorc/crowned-skull.svg" alt="Usuários" class="w-8 h-8 icon-primary">
+                <img src="<?= $basePath ?>img/icons-1x1/lorc/crowned-skull.svg" alt="Usuários" class="w-8 h-8 icon-primary">
                 Gerenciamento de Usuários
             </h1>
             <p class="font-heading theme-text-secondary mt-2">
@@ -28,7 +28,7 @@ $user = new User();
         
         <div class="text-center py-12">
             <div class="w-24 h-24 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-6">
-                <img src="img/icons-1x1/lorc/crenulated-shield.svg" alt="Em desenvolvimento" class="w-12 h-12 icon-muted">
+                <img src="<?= $basePath ?>img/icons-1x1/lorc/crenulated-shield.svg" alt="Em desenvolvimento" class="w-12 h-12 icon-muted">
             </div>
             <h2 class="text-2xl font-bold theme-text-primary mb-4">Em Desenvolvimento</h2>
             <p class="theme-text-secondary mb-6">
@@ -36,7 +36,7 @@ $user = new User();
             </p>
             <a href="index.php?page=admin" 
                class="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded-lg font-heading font-medium inline-flex items-center gap-2">
-                <img src="img/icons-1x1/lorc/bordered-shield.svg" alt="Voltar" class="w-5 h-5 icon-white">
+                <img src="<?= $basePath ?>img/icons-1x1/lorc/bordered-shield.svg" alt="Voltar" class="w-5 h-5 icon-white">
                 Voltar ao Painel Admin
             </a>
         </div>

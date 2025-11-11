@@ -16,7 +16,7 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="font-title text-3xl font-bold text-primary flex items-center gap-3">
-                        <img src="img/icons-1x1/lorc/castle.svg" alt="Dashboard" class="w-8 h-8 icon-primary">
+                        <img src="<?= $basePath ?>img/icons-1x1/lorc/castle.svg" alt="Dashboard" class="w-8 h-8 icon-primary">
                         Dashboard do Guerreiro
                     </h1>
                     <p class="font-heading text-text/70 mt-2">
@@ -43,7 +43,7 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
                         <p class="text-2xl font-bold text-primary">0</p>
                     </div>
                     <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                        <img src="img/icons-1x1/lorc/crossed-swords.svg" alt="Personagens" class="w-5 h-5 icon-primary">
+                        <img src="<?= $basePath ?>img/icons-1x1/lorc/crossed-swords.svg" alt="Personagens" class="w-5 h-5 icon-primary">
                     </div>
                 </div>
                 <p class="text-xs text-text/50 font-heading mt-2">Será implementado na Parte 2</p>
@@ -56,7 +56,7 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
                         <p class="text-2xl font-bold text-primary">0</p>
                     </div>
                     <div class="w-10 h-10 bg-secondary/10 rounded-full flex items-center justify-center">
-                        <img src="img/icons-1x1/lorc/scroll-unfurled.svg" alt="Campanhas" class="w-5 h-5 icon-secondary">
+                        <img src="<?= $basePath ?>img/icons-1x1/lorc/scroll-unfurled.svg" alt="Campanhas" class="w-5 h-5 icon-secondary">
                     </div>
                 </div>
                 <p class="text-xs text-text/50 font-heading mt-2">Será implementado na Parte 5</p>
@@ -69,7 +69,7 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
                         <p class="text-2xl font-bold text-primary">1</p>
                     </div>
                     <div class="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center">
-                        <img src="img/icons-1x1/lorc/flat-star.svg" alt="Nível" class="w-5 h-5 icon-accent">
+                        <img src="<?= $basePath ?>img/icons-1x1/lorc/flat-star.svg" alt="Nível" class="w-5 h-5 icon-accent">
                     </div>
                 </div>
                 <p class="text-xs text-text/50 font-heading mt-2">Sistema de XP futuro</p>
@@ -82,7 +82,7 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
                         <p class="text-2xl font-bold text-primary">1</p>
                     </div>
                     <div class="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center">
-                        <img src="img/icons-1x1/lorc/trophy.svg" alt="Conquistas" class="w-5 h-5 icon-purple">
+                        <img src="<?= $basePath ?>img/icons-1x1/lorc/trophy.svg" alt="Conquistas" class="w-5 h-5 icon-purple">
                     </div>
                 </div>
                 <p class="text-xs text-text/50 font-heading mt-2">Primeiro Login</p>

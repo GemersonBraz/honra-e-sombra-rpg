@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/functions.php';
 // Verificar se as funções de sessão existem
 if (!function_exists('isLoggedIn')) {
     function isLoggedIn() {
@@ -12,14 +13,7 @@ if (!function_exists('isAdmin')) {
     }
 }
 
-// Detectar se estamos no public/ ou app/views/
-$isInPublic = strpos($_SERVER['SCRIPT_NAME'], '/public/') !== false;
-
-// Sistema simplificado de caminhos - sempre usar caminho absoluto
-$basePath = '/Honra-e-Sombra/public/';
-if ($isInPublic) {
-    $basePath = '';
-}
+$basePath = base_path();
 ?>
 
 <!-- Header Principal -->
@@ -33,8 +27,8 @@ if ($isInPublic) {
         <div class="flex items-center justify-between">
             <!-- Logo e Nome -->
             <div class="flex items-center space-x-4">
-                <img src="<?= $basePath ?>img/logo-honra-sombra.png" alt="Logo Honra e Sombra" 
-                     class="h-12 w-12 rounded-full border-2 border-white/30">
+             <img src="<?= $basePath ?>img/logo-honra-sombra.png" alt="Logo Honra e Sombra" 
+                 class="h-12 w-12 rounded-full border-2 border-white/30 navbar-logo">
                 
                 <div class="hidden sm:block">
                     <h1 class="font-title text-2xl font-bold tracking-wide text-nav">

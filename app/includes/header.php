@@ -1,12 +1,7 @@
 <?php
-// Detectar se estamos no public/ ou app/views/
-$isInPublic = strpos($_SERVER['SCRIPT_NAME'], '/public/') !== false;
-
-// Sistema simplificado de caminhos - sempre usar caminho absoluto
-$basePath = '/Honra-e-Sombra/public/';
-if ($isInPublic) {
-    $basePath = '';
-}
+require_once __DIR__ . '/functions.php';
+// Caminho base único para assets
+$basePath = base_path();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="honra">

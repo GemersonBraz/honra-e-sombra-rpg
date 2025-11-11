@@ -248,7 +248,7 @@
     from {
         width: 100%;
     }
-    
+
     to {
         width: 0%;
     }
@@ -261,4 +261,40 @@
 
 .toast.persistent .toast-progress {
     display: none;
+}
+
+/* ===================== */
+/* Filtros de ícones SVG */
+/* ===================== */
+.icon-success {
+    filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+}
+
+.icon-error {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(100%) saturate(3794%) hue-rotate(349deg) brightness(85%) contrast(98%);
+}
+
+.icon-warning {
+    filter: brightness(0) saturate(100%) invert(79%) sepia(78%) saturate(1169%) hue-rotate(358deg) brightness(102%) contrast(101%);
+}
+
+.icon-info {
+    filter: brightness(0) saturate(100%) invert(53%) sepia(98%) saturate(1206%) hue-rotate(204deg) brightness(97%) contrast(105%);
+}
+
+/* Fallback para cores mais simples */
+.toast-icon-success {
+    filter: hue-rotate(120deg) saturate(1.5) brightness(0.8);
+}
+
+.toast-icon-error {
+    filter: hue-rotate(0deg) saturate(1.5) brightness(0.8);
+}
+
+.toast-icon-warning {
+    filter: hue-rotate(45deg) saturate(1.5) brightness(0.8);
+}
+
+.toast-icon-info {
+    filter: hue-rotate(210deg) saturate(1.5) brightness(0.8);
 }

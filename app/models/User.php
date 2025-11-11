@@ -60,6 +60,10 @@ class User {
                 $this->updateLastLogin($user['id']);
                 
                 // Criar sessão
+                // Regera o ID de sessão para mitigar fixation após login bem-sucedido
+                if (session_status() === PHP_SESSION_ACTIVE) {
+                    session_regenerate_id(true);
+                }
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_nome'] = $user['nome'];
                 $_SESSION['user_email'] = $user['email'];

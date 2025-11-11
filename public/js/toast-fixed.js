@@ -1,11 +1,14 @@
 // Toast System - Versão Funcional baseada no debug
 // Sistema Honra e Sombra
+// Melhorias: acessibilidade, basePath utilitário, remoção de CSS inline injetado,
+// suporte a action.handler como função e padronização de durações por tipo.
 
 class ToastSystem {
     constructor() {
+        this.debug = false;
         this.container = this.createContainer();
         document.body.appendChild(this.container);
-        console.log('Toast System inicializado');
+        this.debug && console.log('Toast System inicializado');
     }
 
     createContainer() {
@@ -20,18 +23,21 @@ class ToastSystem {
             width: 100%;
             pointer-events: none;
         `;
+        // Acessibilidade: região de mensagens não intrusivas
+        container.setAttribute('aria-live', 'polite');
+        container.setAttribute('aria-atomic', 'false');
         return container;
     }
 
     show(message, type = 'info', duration = null, options = {}) {
         // Usar duração específica do tipo se não for especificada
         const finalDuration = duration || this.getDurationByType(type);
-        
-        console.log('Criando toast:', {message, type, duration: finalDuration});
-        
+
+        this.debug && console.log('Criando toast:', { message, type, duration: finalDuration });
+
         const toast = document.createElement('div');
         const config = this.getToastConfig(type);
-        
+
         // Configuração básica do toast
         toast.style.cssText = `
             width: 100%;
@@ -41,6 +47,7 @@ class ToastSystem {
             pointer-events: auto;
             cursor: default;
         `;
+        toast.setAttribute('role', 'alert');
 
         toast.className = `
             ${config.bg} ${config.border} ${config.text}
@@ -50,9 +57,11 @@ class ToastSystem {
 
         // HTML estruturado
         const title = options.title ? `<div class="font-semibold text-sm ${config.titleColor} mb-1">${this.escapeHtml(options.title)}</div>` : '';
+        // Mantém compatibilidade com handler string; se for função, anexaremos ouvinte após inserir no DOM
         const actionButton = options.action ? `
-            <button class="mt-2 text-sm font-medium ${config.actionColor} hover:underline focus:outline-none"
-                    onclick="${options.action.handler}">
+            <button class="toast-action-btn mt-2 text-sm font-medium ${config.actionColor} hover:underline focus:outline-none"
+                    ${typeof options.action.handler === 'string' ? `onclick="${options.action.handler}"` : ''}
+                    type="button" role="button" aria-label="${this.escapeHtml(options.action.text)}">
                 ${this.escapeHtml(options.action.text)}
             </button>
         ` : '';
@@ -78,6 +87,7 @@ class ToastSystem {
                 </div>
                 <div class="flex-shrink-0 ml-3">
                     <button class="toast-close p-1 rounded text-gray-400 hover:text-gray-600 focus:outline-none" 
+                            type="button" aria-label="Fechar notificação"
                             onclick="window.toastSystem.remove(this.parentNode.parentNode.parentNode)">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -93,11 +103,17 @@ class ToastSystem {
 
         this.container.appendChild(toast);
 
-        // Mostrar toast com animação
-        setTimeout(() => {
+        // Se handler de ação for função, anexar listener com segurança
+        if (options.action && typeof options.action.handler === 'function') {
+            const btn = toast.querySelector('.toast-action-btn');
+            if (btn) btn.addEventListener('click', options.action.handler);
+        }
+
+        // Mostrar toast com animação (mais confiável com rAF)
+        requestAnimationFrame(() => {
             toast.style.transform = 'translateX(0)';
             toast.style.opacity = '1';
-        }, 50);
+        });
 
         // Auto remover após duração especificada
         setTimeout(() => {
@@ -108,14 +124,9 @@ class ToastSystem {
     }
 
     getToastConfig(type) {
-        // Sistema simplificado de caminhos
-        const path = window.location.pathname;
-        let basePath = '/Honra-e-Sombra/public/';
-        
-        if (path.includes('/public/')) {
-            basePath = '';
-        }
-        
+        // Sistema simplificado de caminhos (pelo utilitário global)
+        const basePath = (typeof window.getBasePath === 'function') ? window.getBasePath() : this.computeBasePath();
+
         const configs = {
             success: {
                 bg: 'bg-green-50',
@@ -197,45 +208,26 @@ class ToastSystem {
     }
 }
 
-// Adicionar CSS necessário
-const style = document.createElement('style');
-style.textContent = `
-@keyframes progressShrink {
-    from { width: 100%; }
-    to { width: 0%; }
+// Utilitário global de basePath (idempotente)
+if (typeof window.getBasePath !== 'function') {
+    window.getBasePath = function () {
+        const path = window.location.pathname || '';
+        return path.includes('/public/') ? '' : '/Honra-e-Sombra/public/';
+    };
 }
 
-/* Cores dos ícones dos toasts */
-.icon-success { 
-    filter: brightness(0) saturate(100%) invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
-}
-
-.icon-error { 
-    filter: brightness(0) saturate(100%) invert(17%) sepia(100%) saturate(3794%) hue-rotate(349deg) brightness(85%) contrast(98%);
-}
-
-.icon-warning { 
-    filter: brightness(0) saturate(100%) invert(79%) sepia(78%) saturate(1169%) hue-rotate(358deg) brightness(102%) contrast(101%);
-}
-
-.icon-info { 
-    filter: brightness(0) saturate(100%) invert(53%) sepia(98%) saturate(1206%) hue-rotate(204deg) brightness(97%) contrast(105%);
-}
-
-/* Fallback para cores mais simples */
-.toast-icon-success { filter: hue-rotate(120deg) saturate(1.5) brightness(0.8); }
-.toast-icon-error { filter: hue-rotate(0deg) saturate(1.5) brightness(0.8); }
-.toast-icon-warning { filter: hue-rotate(45deg) saturate(1.5) brightness(0.8); }
-.toast-icon-info { filter: hue-rotate(210deg) saturate(1.5) brightness(0.8); }
-`;
-document.head.appendChild(style);
+// Fallback local se utilitário não existir por algum motivo
+ToastSystem.prototype.computeBasePath = function () {
+    const path = window.location.pathname || '';
+    return path.includes('/public/') ? '' : '/Honra-e-Sombra/public/';
+};
 
 // Inicializar o sistema quando a página carregar
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Inicializar sistema de toasts
     window.toastSystem = new ToastSystem();
 
-    console.log('Toast system carregado completamente');
+    window.toastSystem.debug && console.log('Toast system carregado completamente');
 });
 
 // Expor métodos globais para facilitar o uso
@@ -247,4 +239,5 @@ window.toast = {
     clear: () => window.toastSystem?.clear()
 };
 
-console.log('Toast system definido globalmente');
+// Log condicionado ao modo debug
+// console.log('Toast system definido globalmente');

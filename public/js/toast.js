@@ -22,6 +22,8 @@ class ToastSystem {
             width: 320px;
             max-width: calc(100vw - 2rem);
         `;
+        container.setAttribute('aria-live', 'polite');
+        container.setAttribute('aria-atomic', 'false');
 
         document.body.appendChild(container);
         return container;
@@ -72,12 +74,14 @@ class ToastSystem {
             border-l-4 rounded-lg shadow-lg p-4 
             hover:shadow-xl transition-shadow duration-200
         `.replace(/\s+/g, ' ').trim();
+        toast.setAttribute('role', 'alert');
 
         // HTML estruturado
         const title = options.title ? `<div class="font-semibold text-sm ${config.titleColor} mb-1">${this.escapeHtml(options.title)}</div>` : '';
         const actionButton = options.action ? `
-            <button class="mt-2 text-sm font-medium ${config.actionColor} hover:underline focus:outline-none"
-                    onclick="${options.action.handler}">
+            <button class="toast-action-btn mt-2 text-sm font-medium ${config.actionColor} hover:underline focus:outline-none"
+                    ${typeof options.action.handler === 'string' ? `onclick="${options.action.handler}"` : ''}
+                    type="button" role="button" aria-label="${this.escapeHtml(options.action.text)}">
                 ${this.escapeHtml(options.action.text)}
             </button>
         ` : '';
@@ -103,6 +107,7 @@ class ToastSystem {
                 </div>
                 <div class="flex-shrink-0 ml-3">
                     <button class="toast-close p-1 rounded text-gray-400 hover:text-gray-600 focus:outline-none" 
+                            type="button" aria-label="Fechar notificação"
                             onclick="window.toastSystem.remove(this.parentNode.parentNode.parentNode)">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -115,6 +120,12 @@ class ToastSystem {
 
         // ID único
         toast.id = 'toast-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+
+        // Se handler for função, anexar listener
+        if (options.action && typeof options.action.handler === 'function') {
+            const btn = toast.querySelector('.toast-action-btn');
+            if (btn) btn.addEventListener('click', options.action.handler);
+        }
 
         return toast;
     }
@@ -162,13 +173,8 @@ class ToastSystem {
 
     getToastConfig(type) {
         // Sistema simplificado de caminhos
-        const path = window.location.pathname;
-        let basePath = '/Honra-e-Sombra/public/';
-        
-        if (path.includes('/public/')) {
-            basePath = '';
-        }
-        
+        const basePath = (typeof window.getBasePath === 'function') ? window.getBasePath() : (window.location.pathname.includes('/public/') ? '' : '/Honra-e-Sombra/public/');
+
         const configs = {
             success: {
                 bg: 'bg-green-50',

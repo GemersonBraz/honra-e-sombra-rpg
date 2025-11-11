@@ -1,12 +1,6 @@
 <?php
-// Detectar se estamos no public/ ou app/views/
-$isInPublic = strpos($_SERVER['SCRIPT_NAME'], '/public/') !== false;
-
-// Sistema simplificado de caminhos - sempre usar caminho absoluto
-$basePath = '/Honra-e-Sombra/public/';
-if ($isInPublic) {
-    $basePath = '';
-}
+require_once __DIR__ . '/functions.php';
+$basePath = base_path();
 ?>
     <!-- Footer -->
     <footer class="bg-surface border-t border-border mt-16">

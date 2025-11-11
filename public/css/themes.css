@@ -1,3 +1,7 @@
+:root .hero-dot {background: rgb(var(--text-nav) / 0.85); border:2px solid rgb(var(--primary) / 0.5);}
+:root .hero-dot-lg { width: 2rem; height: 2rem; background: rgb(var(--text-nav) / 0.85); }
+:root .hero-dot-md { width: 1.5rem; height: 1.5rem; background: rgb(var(--text-nav) / 0.65); }
+:root .hero-dot-sm { width: 1rem; height: 1rem; background: rgb(var(--text-nav) / 0.45); }
 /**
  * Sistema de Temas Simples - Honra e Sombra
  * Arquivo mestre que controla todas as cores do site
@@ -38,6 +42,9 @@
     /* stone-400 - Texto discreto */
     --text-nav: 255 255 255;
     /* white - Texto navbar */
+
+    /* Dourado fixo para destaques sem depender do tema */
+    --gold: 184 134 11;
 
     /* Cores específicas de iconografia */
     --icon-color: 120 113 108;
@@ -99,6 +106,11 @@
     /* gray-600 */
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* Destaque específico: "Honra" dourado apenas no tema escuro */
+[data-theme="sombra"] .honra-highlight {
+    color: rgb(var(--gold));
 }
 
 /* ===== CLASSES CUSTOMIZADAS (usar no lugar das Tailwind quando necessário) ===== */
@@ -308,6 +320,11 @@
     border-color: rgb(var(--border-light));
 }
 
+/* Borda padrão usada em componentes (ex.: feature cards) */
+.border-border {
+    border-color: rgb(var(--border));
+}
+
 /* Bordas laterais coloridas */
 .border-l-primary {
     border-left: 4px solid rgb(var(--primary));
@@ -364,6 +381,8 @@
 .card:hover {
     box-shadow: var(--shadow-lg);
     transform: translateY(-2px);
+    /* Borda mais escura no hover em tema claro para melhor contraste */
+    border-color: rgb(var(--primary) / 0.55);
 }
 
 /* Card com borda lateral colorida */
@@ -386,6 +405,7 @@
 .card-bordered:hover {
     box-shadow: var(--shadow-lg);
     transform: translateY(-2px);
+    border-color: rgb(var(--primary) / 0.55);
 }
 
 /* Botões */
@@ -478,6 +498,15 @@
     bottom: 2rem;
     right: 2rem;
     z-index: 50;
+}
+
+/* ===== NAVBAR - AJUSTES TEMA ESCURO ===== */
+[data-theme="sombra"] .navbar-logo {
+    border-color: rgb(var(--accent));
+}
+
+[data-theme="sombra"] #mobileMenu {
+    border-top-color: rgb(var(--accent) / 0.35);
 }
 
 .theme-toggle:hover {
@@ -639,3 +668,35 @@ textarea:focus {
     outline: 2px solid rgb(var(--primary) / 0.5);
     outline-offset: 2px;
 }
+
+/* Hero logo ring (apenas tema claro) */
+:root .hero-logo-ring {
+    background: radial-gradient(circle at 30% 30%, rgb(var(--secondary) / 0.22), rgb(var(--secondary) / 0.10));
+    border: 2px solid rgb(var(--primary) / 0.35);
+}
+
+/* Borda dourada do logo central (tema claro) */
+:root .hero-logo-border {
+    border: 4px solid rgb(var(--primary));
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.25);
+}
+
+/* Bolinhas decorativas (tema claro) — douradas com borda marrom clara */
+:root .hero-dot {
+    position: absolute;
+    border-radius: 9999px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+    border: 2px solid rgb(var(--secondary) / 0.55); /* borda marrom clara */
+}
+
+:root .hero-dot-lg { width: 2rem; height: 2rem; background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.20), rgb(var(--primary))); }
+:root .hero-dot-md { width: 1.5rem; height: 1.5rem; background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.16), rgb(var(--primary) / 0.90)); }
+:root .hero-dot-sm { width: 1rem; height: 1rem; background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.12), rgb(var(--primary) / 0.80)); }
+
+/* Tema sombra não altera para não poluir visual escuro */
+[data-theme="sombra"] .hero-logo-ring { background: radial-gradient(circle at 30% 30%, rgb(var(--secondary) / 0.45), rgb(var(--secondary) / 0.25)); border: 2px solid rgb(var(--accent) / 0.35); }
+[data-theme="sombra"] .hero-logo-border { border: 4px solid rgb(var(--accent)); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.6); }
+[data-theme="sombra"] .hero-dot { border-color: rgb(var(--accent) / 0.6); box-shadow: 0 3px 8px rgba(0,0,0,0.5); }
+[data-theme="sombra"] .hero-dot-lg { background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.10), rgb(var(--accent))); }
+[data-theme="sombra"] .hero-dot-md { background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.08), rgb(var(--accent) / 0.85)); }
+[data-theme="sombra"] .hero-dot-sm { background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.06), rgb(var(--accent) / 0.7)); }

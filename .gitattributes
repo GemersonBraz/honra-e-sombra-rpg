@@ -1,0 +1,23 @@
+# Normaliza finais de linha e evita warnings de CRLF/LF
+* text=auto
+
+# Arquivos de código: garantir LF
+*.php text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.sql text eol=lf
+
+# SVGs também são texto
+*.svg text eol=lf
+
+# Imagens binárias
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+
+# Windows scripts
+*.bat text eol=crlf
