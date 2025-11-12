@@ -90,7 +90,12 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
         </div>
         
         <!-- Ações Rápidas -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div class="card p-6 mb-8">
+            <h3 class="font-heading text-lg font-semibold text-primary mb-4 flex items-center gap-2">
+                <img src="img/icons-1x1/lorc/gears.svg" alt="Ações Rápidas" class="w-5 h-5 icon-primary">
+                Ações Rápidas
+            </h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php
             // Importar o componente
             require_once __DIR__ . '/../../components/RPGComponents.php';
@@ -147,6 +152,7 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
                 }
             }
             ?>
+            </div>
         </div>
         
         <!-- Informações da Conta -->
@@ -199,11 +205,11 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
             
             <div class="mt-6 pt-6 border-t border-border">
                 <div class="flex flex-wrap gap-4">
-                    <button onclick="systemToasts.featureComingSoon('Editar Perfil')" 
-                            class="btn-secondary inline-flex items-center gap-2">
+                    <a href="index.php?page=perfil" aria-label="Editar Perfil" 
+                       class="btn-secondary inline-flex items-center gap-2">
                         <img src="img/icons-1x1/lorc/quill-ink.svg" alt="Editar" class="w-4 h-4 icon-white">
                         Editar Perfil
-                    </button>
+                    </a>
                     <button onclick="systemToasts.featureComingSoon('Alterar Senha')" 
                             class="btn-outline inline-flex items-center gap-2">
                         <img src="img/icons-1x1/lorc/key.svg" alt="Senha" class="w-4 h-4 icon-muted">

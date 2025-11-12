@@ -69,7 +69,7 @@ class User {
     public function login($email, $senha) {
         try {
             $stmt = $this->db->prepare("
-                SELECT id, nome, email, senha, tipo 
+                SELECT id, nome, email, senha, tipo, display_title 
                 FROM users 
                 WHERE email = ? AND ativo = 1
             ");
@@ -90,7 +90,21 @@ class User {
                 $_SESSION['user_nome'] = $user['nome'];
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['user_tipo'] = $user['tipo'];
-                $_SESSION['login_time'] = time();
+                    $_SESSION['login_time'] = time();
+                    if (!empty($user['display_title'])) {
+                        $_SESSION['user_display_title'] = $user['display_title'];
+                    }
+                // Carrega avatar da base (se existir) para sessão, garantindo exibição imediata
+                try {
+                    $stmtAvatar = $this->db->prepare("SELECT avatar FROM users WHERE id = ?");
+                    $stmtAvatar->execute([$user['id']]);
+                    $rowAvatar = $stmtAvatar->fetch();
+                    if ($rowAvatar && !empty($rowAvatar['avatar'])) {
+                        $_SESSION['user_avatar'] = $rowAvatar['avatar'];
+                    }
+                } catch (Exception $e) {
+                    // silencioso: coluna pode não existir em ambientes sem migration
+                }
                 
                 return ['success' => true, 'user' => $user];
             }
@@ -107,7 +121,6 @@ class User {
      */
     public function logout() {
         $_SESSION = [];
-        
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
             setcookie(session_name(), '', time() - 42000,
@@ -115,8 +128,46 @@ class User {
                 $params["secure"], $params["httponly"]
             );
         }
-        
         session_destroy();
+    }
+
+    /**
+     * Atualizar nome de exibição e bio
+     */
+    public function updateProfile(int $userId, ?string $displayTitle, ?string $bio): array {
+        try {
+            $stmt = $this->db->prepare("UPDATE users SET display_title = ?, bio = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND ativo = 1");
+            $ok = $stmt->execute([$displayTitle, $bio, $userId]);
+            if ($ok) {
+                $_SESSION['user_display_title'] = $displayTitle;
+            }
+            return $ok ? ['success' => true] : ['success' => false, 'message' => 'Nada atualizado'];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Erro ao atualizar perfil: ' . $e->getMessage()];
+        }
+    }
+
+    /**
+     * Trocar senha após validar a senha atual
+     */
+    public function changePassword(int $userId, string $currentPassword, string $newPassword): array {
+        try {
+            $stmt = $this->db->prepare("SELECT senha FROM users WHERE id = ? AND ativo = 1");
+            $stmt->execute([$userId]);
+            $row = $stmt->fetch();
+            if (!$row) {
+                return ['success' => false, 'message' => 'Usuário não encontrado.'];
+            }
+            if (!password_verify($currentPassword, $row['senha'])) {
+                return ['success' => false, 'message' => 'Senha atual incorreta.'];
+            }
+            $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $stmtU = $this->db->prepare("UPDATE users SET senha = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?");
+            $ok = $stmtU->execute([$newHash, $userId]);
+            return $ok ? ['success' => true] : ['success' => false, 'message' => 'Falha ao atualizar senha.'];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Erro ao alterar senha: ' . $e->getMessage()];
+        }
     }
     
     /**
@@ -138,12 +189,12 @@ class User {
      */
     public function getUserInfo($id) {
         $stmt = $this->db->prepare("
-            SELECT id, nome, email, tipo, data_criacao, ultimo_login,
-                   DATE_FORMAT(data_criacao, '%Y-%m-%d %H:%i:%s') as data_criacao,
-                   DATE_FORMAT(ultimo_login, '%Y-%m-%d %H:%i:%s') as ultimo_acesso
-            FROM users 
-            WHERE id = ? AND ativo = 1
-        ");
+         SELECT id, nome, email, tipo, display_title, bio,
+             DATE_FORMAT(data_criacao, '%Y-%m-%d %H:%i:%s') AS data_criacao,
+             DATE_FORMAT(ultimo_login, '%Y-%m-%d %H:%i:%s') AS ultimo_acesso
+         FROM users
+         WHERE id = ? AND ativo = 1
+     ");
         
         $stmt->execute([$id]);
         $user = $stmt->fetch();
@@ -154,6 +205,8 @@ class User {
                 'nome' => $user['nome'],
                 'email' => $user['email'],
                 'tipo' => $user['tipo'],
+                'display_title' => $user['display_title'] ?? null,
+                'bio' => $user['bio'] ?? null,
                 'data_criacao' => $user['data_criacao'],
                 'ultimo_acesso' => $user['ultimo_acesso'] ?? date('Y-m-d H:i:s')
             ];

@@ -45,7 +45,7 @@ $basePath = base_path();
                         <h3 class="font-heading font-semibold text-primary mb-4">Conta</h3>
                         <ul class="space-y-2 text-sm">
                             <?php if (isLoggedIn()): ?>
-                                <li><span class="text-text/70">Olá, <?= htmlspecialchars($_SESSION['user_nome']) ?>!</span></li>
+                                <li><span class="text-text/70">Olá, <?= htmlspecialchars($_SESSION['user_display_title'] ?? $_SESSION['user_nome']) ?>!</span></li>
                                 <li><a href="index.php?page=dashboard" class="text-text/70 hover:text-primary transition-colors">Meu Dashboard</a></li>
                                 <li><a href="logout.php" class="text-text/70 hover:text-primary transition-colors">Logout</a></li>
                             <?php else: ?>

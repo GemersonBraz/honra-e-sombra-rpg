@@ -88,8 +88,17 @@ $basePath = base_path();
                             </a>
                         <?php endif; ?>
                         
-                        <span class="text-white/80 font-heading text-sm">
-                            Olá, <span class="font-semibold text-yellow-200"><?= htmlspecialchars($_SESSION['user_nome'] ?? 'Guerreiro') ?></span>
+                        <?php
+                            // Determina caminho do avatar do usuário (da sessão) ou fallback
+                            $avatarSession = $_SESSION['user_avatar'] ?? null;
+                            $avatarPath = $avatarSession && file_exists(__DIR__ . '/../../public/' . $avatarSession)
+                                ? $avatarSession
+                                : 'img/icons-1x1/lorc/trophy.svg';
+                        ?>
+                        <?php $displayName = $_SESSION['user_display_title'] ?? $_SESSION['user_nome'] ?? 'Guerreiro'; ?>
+                        <span class="flex items-center gap-2 text-white/80 font-heading text-sm">
+                            <img src="<?= $basePath . $avatarPath ?>" alt="Avatar" class="navbar-avatar w-8 h-8 rounded-full border-2 border-white/30 object-cover">
+                            Olá, <span class="font-semibold text-yellow-200"><?= htmlspecialchars($displayName) ?></span>
                         </span>
                         
                         <a href="logout.php" 

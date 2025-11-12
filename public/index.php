@@ -219,9 +219,10 @@ switch ($path) {
             $user = new User();
             $userId = (int)($_SESSION['user_id'] ?? 0);
             $updated = false;
+            $action = $_POST['action'] ?? 'avatar';
 
-            // 1) Upload de arquivo
-            if (isset($_FILES['avatar_upload']) && is_array($_FILES['avatar_upload']) && $_FILES['avatar_upload']['error'] === UPLOAD_ERR_OK) {
+            // 1) Atualização de avatar (upload)
+            if ($action === 'avatar' && isset($_FILES['avatar_upload']) && is_array($_FILES['avatar_upload']) && $_FILES['avatar_upload']['error'] === UPLOAD_ERR_OK) {
                 $file = $_FILES['avatar_upload'];
                 $maxSize = 2 * 1024 * 1024; // 2MB
                 $allowedExt = ['jpg','jpeg','png','webp'];
@@ -251,6 +252,17 @@ switch ($path) {
                 $publicPath = 'img/avatars/uploads/' . $filename;
                 $res = $user->updateAvatar($userId, $publicPath);
                 if ($res['success']) {
+                    // Limitar a 3 uploads por usuário (apagar os mais antigos)
+                    $pattern = $uploadDir . '/user_' . $userId . '_*';
+                    $userFiles = glob($pattern);
+                    if ($userFiles && count($userFiles) > 3) {
+                        // Ordena por data de criação (mais antiga primeiro)
+                        usort($userFiles, function($a, $b) { return filectime($a) <=> filectime($b); });
+                        while (count($userFiles) > 3) {
+                            $old = array_shift($userFiles);
+                            @unlink($old);
+                        }
+                    }
                     setMessage('Avatar atualizado com sucesso!', 'success');
                     $updated = true;
                 } else {
@@ -258,13 +270,14 @@ switch ($path) {
                 }
             }
 
-            // 2) Seleção de avatar padrão
-            if (!$updated && isset($_POST['avatar_preset'])) {
+            // 2) Seleção de avatar padrão/uploads existentes
+            if (!$updated && $action === 'avatar' && isset($_POST['avatar_preset'])) {
                 $preset = trim($_POST['avatar_preset']);
                 // Permitir apenas caminhos dentro de pastas conhecidas
                 $allowedPrefixes = [
                     'img/avatars/defaults/',
-                    'img/icons-1x1/lorc/'
+                    'img/icons-1x1/lorc/',
+                    'img/avatars/uploads/'
                 ];
                 $allowed = false;
                 foreach ($allowedPrefixes as $prefix) {
@@ -281,6 +294,72 @@ switch ($path) {
                     }
                 } else {
                     setMessage('Avatar selecionado inválido.', 'error');
+                }
+            }
+
+            // 3) Atualizar dados de perfil (display name e bio)
+            if ($action === 'profile') {
+                $display = isset($_POST['display_title']) ? trim($_POST['display_title']) : '';
+                $bio = isset($_POST['bio']) ? trim($_POST['bio']) : '';
+                // Validações simples
+                if ($display !== '' && (mb_strlen($display) < 2 || mb_strlen($display) > 40)) {
+                    setMessage('Nome de exibição deve ter entre 2 e 40 caracteres.', 'error');
+                    redirect('/perfil');
+                }
+                if (mb_strlen($bio) > 500) {
+                    setMessage('Descrição deve ter no máximo 500 caracteres.', 'error');
+                    redirect('/perfil');
+                }
+                $res = $user->updateProfile($userId, $display ?: null, $bio ?: null);
+                if ($res['success']) {
+                    setMessage('Perfil atualizado com sucesso!', 'success');
+                } else {
+                    setMessage($res['message'] ?? 'Não foi possível atualizar o perfil.', 'error');
+                }
+            }
+
+            // 4) Trocar senha
+            if ($action === 'change_password') {
+                $current = $_POST['current_password'] ?? '';
+                $new = $_POST['new_password'] ?? '';
+                $confirm = $_POST['confirm_password'] ?? '';
+                if (strlen($new) < 6) {
+                    setMessage('A nova senha deve ter pelo menos 6 caracteres.', 'error');
+                    redirect('/perfil');
+                }
+                if ($new !== $confirm) {
+                    setMessage('A confirmação de senha não confere.', 'error');
+                    redirect('/perfil');
+                }
+                $res = $user->changePassword($userId, $current, $new);
+                if ($res['success']) {
+                    setMessage('Senha alterada com sucesso!', 'success');
+                } else {
+                    setMessage($res['message'] ?? 'Não foi possível alterar a senha.', 'error');
+                }
+            }
+
+            // 5) Deletar avatar upload específico
+            if ($action === 'delete_avatar' && isset($_POST['delete_file'])) {
+                $fileRel = trim($_POST['delete_file']);
+                // Apenas arquivos do próprio usuário dentro de uploads
+                if (strpos($fileRel, 'img/avatars/uploads/user_' . $userId . '_') === 0) {
+                    $fullPath = __DIR__ . '/' . $fileRel;
+                    if (is_file($fullPath)) {
+                        // Se é o avatar atual, limpar da sessão antes de deletar
+                        if (isset($_SESSION['user_avatar']) && $_SESSION['user_avatar'] === $fileRel) {
+                            unset($_SESSION['user_avatar']);
+                        }
+                        if (@unlink($fullPath)) {
+                            setMessage('Avatar removido com sucesso.', 'success');
+                        } else {
+                            setMessage('Falha ao remover arquivo.', 'error');
+                        }
+                    } else {
+                        setMessage('Arquivo não encontrado.', 'error');
+                    }
+                } else {
+                    setMessage('Operação inválida.', 'error');
                 }
             }
 

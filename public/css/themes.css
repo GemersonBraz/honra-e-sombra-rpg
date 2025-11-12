@@ -1,7 +1,33 @@
-:root .hero-dot {background: rgb(var(--text-nav) / 0.85); border:2px solid rgb(var(--primary) / 0.5);}
-:root .hero-dot-lg { width: 2rem; height: 2rem; background: rgb(var(--text-nav) / 0.85); }
-:root .hero-dot-md { width: 1.5rem; height: 1.5rem; background: rgb(var(--text-nav) / 0.65); }
-:root .hero-dot-sm { width: 1rem; height: 1rem; background: rgb(var(--text-nav) / 0.45); }
+[data-theme]:root input[type="radio"]:checked+.avatar-option,
+:root input[type="radio"]:checked+.avatar-option {
+    /* Modo claro: manter destaque dourado ao selecionar */
+    border-color: rgb(var(--primary));
+    box-shadow: 0 0 0 3px rgb(var(--primary) / 0.25);
+}
+
+:root .hero-dot {
+    background: rgb(var(--text-nav) / 0.85);
+    border: 2px solid rgb(var(--primary) / 0.5);
+}
+
+:root .hero-dot-lg {
+    width: 2rem;
+    height: 2rem;
+    background: rgb(var(--text-nav) / 0.85);
+}
+
+:root .hero-dot-md {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: rgb(var(--text-nav) / 0.65);
+}
+
+:root .hero-dot-sm {
+    width: 1rem;
+    height: 1rem;
+    background: rgb(var(--text-nav) / 0.45);
+}
+
 /**
  * Sistema de Temas Simples - Honra e Sombra
  * Arquivo mestre que controla todas as cores do site
@@ -509,6 +535,76 @@
     border-top-color: rgb(var(--accent) / 0.35);
 }
 
+/* Avatar na navbar (tamanho e borda consistente com tema) */
+.navbar-avatar {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    background: rgb(var(--surface));
+    transition: transform .2s ease, box-shadow .3s ease;
+}
+
+.navbar-avatar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="sombra"] .navbar-avatar {
+    border-color: rgb(var(--accent));
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="sombra"] .navbar-avatar:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+/* ===== Avatar Presets - Perfil ===== */
+.avatar-option {
+    transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease;
+}
+
+.avatar-option:hover {
+    transform: translateY(-1px);
+}
+
+/* Tema escuro: hover/selecionado em verde (accent) */
+[data-theme="sombra"] .avatar-option:hover {
+    border-color: rgb(var(--accent));
+    box-shadow: 0 0 0 2px rgb(var(--accent) / 0.20);
+}
+
+[data-theme="sombra"] input[type="radio"]:checked+.avatar-option {
+    border-color: rgb(var(--accent));
+    box-shadow: 0 0 0 3px rgb(var(--accent) / 0.25);
+}
+
+[data-theme="sombra"] label:focus-within .avatar-option {
+    box-shadow: 0 0 0 3px rgb(var(--accent) / 0.35);
+}
+
+/* Botão de deletar upload (X) nos avatares do usuário) */
+.avatar-del-btn {
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    border-radius: 9999px;
+    background: rgb(239 68 68);
+    /* vermelho */
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.avatar-del-btn:hover {
+    filter: brightness(1.05);
+    transform: scale(1.05);
+}
+
+[data-theme="sombra"] .avatar-del-btn {
+    background: rgb(220 38 38);
+    border-color: rgba(255, 255, 255, 0.85);
+}
+
 .theme-toggle:hover {
     background-color: rgb(var(--primary));
     color: rgb(var(--text-nav));
@@ -678,25 +774,60 @@ textarea:focus {
 /* Borda dourada do logo central (tema claro) */
 :root .hero-logo-border {
     border: 4px solid rgb(var(--primary));
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
 }
 
 /* Bolinhas decorativas (tema claro) — douradas com borda marrom clara */
 :root .hero-dot {
     position: absolute;
     border-radius: 9999px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
-    border: 2px solid rgb(var(--secondary) / 0.55); /* borda marrom clara */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+    border: 2px solid rgb(var(--secondary) / 0.55);
+    /* borda marrom clara */
 }
 
-:root .hero-dot-lg { width: 2rem; height: 2rem; background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.20), rgb(var(--primary))); }
-:root .hero-dot-md { width: 1.5rem; height: 1.5rem; background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.16), rgb(var(--primary) / 0.90)); }
-:root .hero-dot-sm { width: 1rem; height: 1rem; background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.12), rgb(var(--primary) / 0.80)); }
+:root .hero-dot-lg {
+    width: 2rem;
+    height: 2rem;
+    background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.20), rgb(var(--primary)));
+}
+
+:root .hero-dot-md {
+    width: 1.5rem;
+    height: 1.5rem;
+    background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.16), rgb(var(--primary) / 0.90));
+}
+
+:root .hero-dot-sm {
+    width: 1rem;
+    height: 1rem;
+    background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 0.12), rgb(var(--primary) / 0.80));
+}
 
 /* Tema sombra não altera para não poluir visual escuro */
-[data-theme="sombra"] .hero-logo-ring { background: radial-gradient(circle at 30% 30%, rgb(var(--secondary) / 0.45), rgb(var(--secondary) / 0.25)); border: 2px solid rgb(var(--accent) / 0.35); }
-[data-theme="sombra"] .hero-logo-border { border: 4px solid rgb(var(--accent)); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.6); }
-[data-theme="sombra"] .hero-dot { border-color: rgb(var(--accent) / 0.6); box-shadow: 0 3px 8px rgba(0,0,0,0.5); }
-[data-theme="sombra"] .hero-dot-lg { background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.10), rgb(var(--accent))); }
-[data-theme="sombra"] .hero-dot-md { background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.08), rgb(var(--accent) / 0.85)); }
-[data-theme="sombra"] .hero-dot-sm { background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.06), rgb(var(--accent) / 0.7)); }
+[data-theme="sombra"] .hero-logo-ring {
+    background: radial-gradient(circle at 30% 30%, rgb(var(--secondary) / 0.45), rgb(var(--secondary) / 0.25));
+    border: 2px solid rgb(var(--accent) / 0.35);
+}
+
+[data-theme="sombra"] .hero-logo-border {
+    border: 4px solid rgb(var(--accent));
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="sombra"] .hero-dot {
+    border-color: rgb(var(--accent) / 0.6);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="sombra"] .hero-dot-lg {
+    background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.10), rgb(var(--accent)));
+}
+
+[data-theme="sombra"] .hero-dot-md {
+    background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.08), rgb(var(--accent) / 0.85));
+}
+
+[data-theme="sombra"] .hero-dot-sm {
+    background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.06), rgb(var(--accent) / 0.7));
+}
