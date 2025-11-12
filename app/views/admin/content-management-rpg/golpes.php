@@ -77,9 +77,9 @@ require_once __DIR__ . '/../../../includes/navbar.php';
             <div class="card overflow-hidden hover:shadow-xl transition-shadow duration-300">
                 
                 <!-- Header do Card com Imagem/Ícone -->
-                <div class="relative h-32 bg-gradient-to-br from-<?= $golpe['elemento'] ?? 'gray' ?>-500/20 to-<?= $golpe['elemento'] ?? 'gray' ?>-600/10 flex items-center justify-center">
-                    <?php if ($golpe['imagem']): ?>
-                        <img src="<?= SITE_URL ?>/<?= $golpe['imagem'] ?>" alt="<?= $golpe['nome'] ?>" class="w-20 h-20 object-contain">
+                <div class="relative h-40 md:h-44 xl:h-48 overflow-hidden bg-gradient-to-br from-<?= $golpe['elemento'] ?? 'gray' ?>-500/20 to-<?= $golpe['elemento'] ?? 'gray' ?>-600/10 flex items-center justify-center">
+                    <?php if (!empty($golpe['imagem'])): ?>
+                        <img src="<?= SITE_URL ?>/public/img/golpes/<?= htmlspecialchars($golpe['imagem'], ENT_QUOTES) ?>" alt="<?= htmlspecialchars($golpe['nome'], ENT_QUOTES) ?>" class="w-full h-full object-cover" loading="lazy" decoding="async">
                     <?php else: ?>
                         <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/sword-clash.svg" alt="Golpe" class="w-16 h-16 opacity-30">
                     <?php endif; ?>
@@ -87,9 +87,9 @@ require_once __DIR__ . '/../../../includes/navbar.php';
                     <!-- Badge de Status -->
                     <div class="absolute top-3 right-3">
                         <?php if ($golpe['ativo']): ?>
-                            <span class="px-2 py-1 rounded-full text-xs font-semibold bg-success/20 text-success">Ativo</span>
+                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-700 text-white border border-white/10 shadow-sm">Ativo</span>
                         <?php else: ?>
-                            <span class="px-2 py-1 rounded-full text-xs font-semibold bg-danger/20 text-danger">Inativo</span>
+                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-800 text-white border border-white/10 shadow-sm">Inativo</span>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -158,7 +158,7 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 
                         <!-- Nível -->
                         <div class="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
-                            <p class="text-xs text-text/60 mb-1">� Nível</p>
+                            <p class="text-xs text-text/60 mb-1">🏅 Nível</p>
                             <span class="px-2 py-1 rounded text-xs font-semibold capitalize inline-block
                                 <?php
                                 switch($golpe['nivel_minimo']) {
@@ -339,7 +339,7 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 </main>
 
 <!-- Modal de Criar/Editar Golpe -->
-<div id="golpeModal" class="modal fixed inset-0 bg-black/50 backdrop-blur-sm items-center justify-center p-4" style="display: none; z-index: 9999;">
+<div id="golpeModal" class="modal fixed inset-0 bg-black/50 backdrop-blur-sm items-center justify-center p-4" style="z-index: 9999;">
     <div class="bg-background rounded-xl shadow-2xl w-full max-w-4xl max-h-[85vh] overflow-hidden flex flex-col border-2 border-amber-200 dark:border-amber-600/30">
         
         <!-- Header do Modal -->
@@ -588,9 +588,8 @@ function openModal(golpeId = null) {
         return;
     }
     
-    // Mostrar modal usando a classe 'show' e forçando display:flex
+    // Mostrar modal usando apenas a classe 'show' (CSS controla display)
     modal.classList.add('show');
-    modal.style.setProperty('display', 'flex', 'important');
     
     if (golpeId) {
         modalTitle.textContent = 'Editar Golpe Especial';
@@ -608,8 +607,7 @@ function openModal(golpeId = null) {
 // Fechar modal
 function closeModal() {
     const modal = document.getElementById('golpeModal');
-    // Esconder modal removendo 'show' e forçando display:none
-    modal.style.setProperty('display', 'none', 'important');
+    // Esconder modal removendo 'show' (CSS controla display)
     modal.classList.remove('show');
     document.getElementById('golpeForm').reset();
 }
