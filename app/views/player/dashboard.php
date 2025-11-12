@@ -34,6 +34,21 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
             </div>
         </div>
         
+        <!-- Ações Rápidas -->
+        <div class="card p-6 mb-8">
+            <h3 class="font-heading text-lg font-semibold text-primary mb-4 flex items-center gap-2">
+                <img src="<?= $basePath ?>img/icons-1x1/lorc/gears.svg" alt="Ações" class="w-5 h-5 icon-primary">
+                Ações Rápidas
+            </h3>
+            <div class="flex gap-4">
+                <a href="index.php?page=perfil" aria-label="Meu Perfil" 
+                   class="btn-primary inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/quill-ink.svg" alt="Perfil" class="w-4 h-4 icon-white">
+                    Meu Perfil
+                </a>
+            </div>
+        </div>
+        
         <!-- Cards de Status -->
         <div class="grid md:grid-cols-4 gap-6 mb-8">
             <div class="card p-6">
@@ -89,11 +104,11 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
             </div>
         </div>
         
-        <!-- Ações Rápidas -->
+        <!-- Ferramentas do Guerreiro -->
         <div class="card p-6 mb-8">
             <h3 class="font-heading text-lg font-semibold text-primary mb-4 flex items-center gap-2">
-                <img src="img/icons-1x1/lorc/gears.svg" alt="Ações Rápidas" class="w-5 h-5 icon-primary">
-                Ações Rápidas
+                <img src="img/icons-1x1/lorc/gears.svg" alt="Ferramentas" class="w-5 h-5 icon-primary">
+                Ferramentas do Guerreiro
             </h3>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <?php
@@ -152,75 +167,6 @@ $userInfo = $user->getUserInfo($_SESSION['user_id']);
                 }
             }
             ?>
-            </div>
-        </div>
-        
-        <!-- Informações da Conta -->
-        <div class="card p-6">
-            <h3 class="font-heading text-lg font-semibold text-primary mb-4 flex items-center gap-2">
-                <img src="img/icons-1x1/lorc/gear-hammer.svg" alt="Configurações" class="w-5 h-5 icon-primary">
-                Informações da Conta
-            </h3>
-            
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h4 class="font-heading font-medium text-primary mb-3">Dados Pessoais</h4>
-                    <div class="space-y-2 text-sm">
-                        <div class="flex justify-between">
-                            <span class="text-text/60">Nome:</span>
-                            <span class="text-primary font-medium"><?= htmlspecialchars($userInfo['nome']) ?></span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-text/60">Email:</span>
-                            <span class="text-primary font-medium"><?= htmlspecialchars($userInfo['email']) ?></span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-text/60">Tipo de Conta:</span>
-                            <span class="text-primary font-medium"><?= ucfirst($userInfo['tipo']) ?></span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="font-heading font-medium text-primary mb-3">Estatísticas</h4>
-                    <div class="space-y-2 text-sm">
-                        <div class="flex justify-between">
-                            <span class="text-text/60">Conta criada em:</span>
-                            <span class="text-primary font-medium"><?= date('d/m/Y', strtotime($userInfo['data_criacao'])) ?></span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-text/60">Último acesso:</span>
-                            <span class="text-primary font-medium"><?= date('d/m/Y H:i', strtotime($userInfo['ultimo_acesso'] ?? 'now')) ?></span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-text/60">Status:</span>
-                            <span class="text-emerald-600 font-medium flex items-center gap-1">
-                                <img src="img/icons-1x1/lorc/checked-shield.svg" alt="Ativa" class="w-4 h-4" style="filter: brightness(0) saturate(100%) invert(45%) sepia(86%) saturate(492%) hue-rotate(95deg) brightness(101%) contrast(101%);">
-                                Ativa
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-6 pt-6 border-t border-border">
-                <div class="flex flex-wrap gap-4">
-                    <a href="index.php?page=perfil" aria-label="Editar Perfil" 
-                       class="btn-secondary inline-flex items-center gap-2">
-                        <img src="img/icons-1x1/lorc/quill-ink.svg" alt="Editar" class="w-4 h-4 icon-white">
-                        Editar Perfil
-                    </a>
-                    <button onclick="systemToasts.featureComingSoon('Alterar Senha')" 
-                            class="btn-outline inline-flex items-center gap-2">
-                        <img src="img/icons-1x1/lorc/key.svg" alt="Senha" class="w-4 h-4 icon-muted">
-                        Alterar Senha
-                    </button>
-                    <button onclick="systemToasts.featureComingSoon('Configurações')" 
-                            class="btn-outline inline-flex items-center gap-2">
-                        <img src="img/icons-1x1/lorc/gear-hammer.svg" alt="Config" class="w-4 h-4 icon-muted">
-                        Configurações
-                    </button>
-                </div>
             </div>
         </div>
         

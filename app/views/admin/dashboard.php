@@ -6,9 +6,9 @@ include __DIR__ . '/../../includes/navbar.php';
 $user = new User();
 $userInfo = $user->getUserInfo($_SESSION['user_id']);
 
-// Estatísticas do sistema (placeholder - implementar queries reais nas próximas partes)
+// Estatísticas do sistema
 $stats = [
-    'total_users' => 1, // Será implementado
+    'total_users' => $user->getUserCount(), // Conta usuários ativos no banco
     'total_characters' => 0, // Será implementado na Parte 2
     'total_campaigns' => 0, // Será implementado na Parte 5
     'active_sessions' => 1 // Será implementado
@@ -38,6 +38,57 @@ $stats = [
                         <p>Admin desde: <?= date('M/Y', strtotime($userInfo['data_criacao'])) ?></p>
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Ações Administrativas Rápidas -->
+        <div class="card mb-8">
+            <h3 class="font-heading text-lg font-semibold text-primary mb-6 border-b border-border pb-2 flex items-center gap-2">
+                <img src="<?= $basePath ?>img/icons-1x1/lorc/archery-target.svg" alt="Ações" class="w-5 h-5 icon-primary">
+                Ações Rápidas
+            </h3>
+            
+            <div class="flex flex-wrap gap-4">
+                <button onclick="window.location.href='index.php?page=admin/users'" 
+                        class="btn-primary inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/crowned-skull.svg" alt="Usuários" class="w-4 h-4 icon-white">
+                    Ver Usuários
+                </button>
+                <a href="index.php?page=perfil" 
+                   class="btn-secondary inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/quill-ink.svg" alt="Perfil" class="w-4 h-4 icon-white">
+                    Editar Perfil
+                </a>
+                <button onclick="systemToasts.backupComplete()" 
+                        class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-heading text-sm inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/scroll-unfurled.svg" alt="Backup" class="w-4 h-4 icon-white">
+                    Backup Agora
+                </button>
+                <button onclick="systemToasts.featureComingSoon('Logs Detalhados')" 
+                        class="bg-yellow-600 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg font-heading text-sm inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/papers.svg" alt="Logs" class="w-4 h-4 icon-white">
+                    Ver Logs
+                </button>
+                <button onclick="systemToasts.maintenance()" 
+                        class="bg-orange-600 hover:bg-orange-500 text-white px-4 py-2 rounded-lg font-heading text-sm inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/hammer-nails.svg" alt="Manutenção" class="w-4 h-4 icon-white">
+                    Modo Manutenção
+                </button>
+                <a href="index.php?page=toast-demo" 
+                   class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg font-heading text-sm inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/sliced-bread.svg" alt="Toast" class="w-4 h-4 icon-white">
+                    Demo Toasts
+                </a>
+                <button onclick="systemToasts.featureComingSoon('Configurações Avançadas')" 
+                        class="btn-outline inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/gears.svg" alt="Configurações" class="w-4 h-4 icon-muted">
+                    Configurações
+                </button>
+                <button onclick="themeSystem.toggleTheme()" 
+                        class="btn-secondary inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/moon.svg" alt="Tema" class="w-4 h-4 icon-white">
+                    Alternar Tema
+                </button>
             </div>
         </div>
         
@@ -277,52 +328,6 @@ $stats = [
                         <span class="text-primary font-medium">Nunca</span>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Ações Administrativas Rápidas -->
-        <div class="card">
-            <h3 class="font-heading text-lg font-semibold text-primary mb-6 border-b border-border pb-2 flex items-center gap-2">
-                <img src="<?= $basePath ?>img/icons-1x1/lorc/archery-target.svg" alt="Ações" class="w-5 h-5 icon-primary">
-                Ações Rápidas
-            </h3>
-            
-            <div class="flex flex-wrap gap-4">
-                <button onclick="window.location.href='index.php?page=admin/users'" 
-                        class="btn-primary inline-flex items-center gap-2">
-                    <img src="<?= $basePath ?>img/icons-1x1/lorc/crowned-skull.svg" alt="Usuários" class="w-4 h-4 icon-white">
-                    Ver Usuários
-                </button>
-                <button onclick="systemToasts.backupComplete()" 
-                        class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-heading text-sm inline-flex items-center gap-2">
-                    <img src="<?= $basePath ?>img/icons-1x1/lorc/scroll-unfurled.svg" alt="Backup" class="w-4 h-4 icon-white">
-                    Backup Agora
-                </button>
-                <button onclick="systemToasts.featureComingSoon('Logs Detalhados')" 
-                        class="bg-yellow-600 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg font-heading text-sm inline-flex items-center gap-2">
-                    <img src="<?= $basePath ?>img/icons-1x1/lorc/papers.svg" alt="Logs" class="w-4 h-4 icon-white">
-                    Ver Logs
-                </button>
-                <button onclick="systemToasts.maintenance()" 
-                        class="bg-orange-600 hover:bg-orange-500 text-white px-4 py-2 rounded-lg font-heading text-sm inline-flex items-center gap-2">
-                    <img src="<?= $basePath ?>img/icons-1x1/lorc/hammer-nails.svg" alt="Manutenção" class="w-4 h-4 icon-white">
-                    Modo Manutenção
-                </button>
-                <a href="index.php?page=toast-demo" 
-                   class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg font-heading text-sm inline-flex items-center gap-2">
-                    <img src="<?= $basePath ?>img/icons-1x1/lorc/sliced-bread.svg" alt="Toast" class="w-4 h-4 icon-white">
-                    Demo Toasts
-                </a>
-                <button onclick="systemToasts.featureComingSoon('Configurações Avançadas')" 
-                        class="btn-outline inline-flex items-center gap-2">
-                    <img src="<?= $basePath ?>img/icons-1x1/lorc/gears.svg" alt="Configurações" class="w-4 h-4 icon-muted">
-                    Configurações
-                </button>
-                <button onclick="themeSystem.toggleTheme()" 
-                        class="btn-secondary inline-flex items-center gap-2">
-                    <img src="<?= $basePath ?>img/icons-1x1/lorc/moon.svg" alt="Tema" class="w-4 h-4 icon-white">
-                    Alternar Tema
-                </button>
             </div>
         </div>
         

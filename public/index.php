@@ -200,6 +200,55 @@ switch ($path) {
         
     case '/admin/users':
         requireAdmin();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $user = new User();
+            $action = $_POST['action'] ?? '';
+            $userId = (int)($_POST['user_id'] ?? 0);
+            
+            if ($action === 'edit' && $userId > 0) {
+                $data = [];
+                if (isset($_POST['nome'])) $data['nome'] = trim($_POST['nome']);
+                if (isset($_POST['email'])) $data['email'] = trim($_POST['email']);
+                if (isset($_POST['tipo'])) $data['tipo'] = $_POST['tipo'];
+                if (isset($_POST['ativo'])) $data['ativo'] = (int)$_POST['ativo'];
+                
+                $res = $user->updateUser($userId, $data);
+                if ($res['success']) {
+                    setMessage('Usuário atualizado com sucesso!', 'success');
+                } else {
+                    setMessage($res['message'] ?? 'Erro ao atualizar usuário.', 'error');
+                }
+            }
+            
+            if ($action === 'delete' && $userId > 0) {
+                $res = $user->deleteUser($userId);
+                if ($res['success']) {
+                    setMessage('Usuário deletado com sucesso!', 'success');
+                } else {
+                    setMessage($res['message'] ?? 'Erro ao deletar usuário.', 'error');
+                }
+            }
+            
+            if ($action === 'reset_password' && $userId > 0) {
+                $newPassword = $_POST['new_password'] ?? '';
+                $confirmPassword = $_POST['confirm_password'] ?? '';
+                
+                if (strlen($newPassword) < 6) {
+                    setMessage('Senha deve ter pelo menos 6 caracteres.', 'error');
+                } elseif ($newPassword !== $confirmPassword) {
+                    setMessage('Senhas não conferem.', 'error');
+                } else {
+                    $res = $user->resetPassword($userId, $newPassword);
+                    if ($res['success']) {
+                        setMessage('Senha resetada com sucesso!', 'success');
+                    } else {
+                        setMessage($res['message'] ?? 'Erro ao resetar senha.', 'error');
+                    }
+                }
+            }
+            
+            redirect('/admin/users');
+        }
         include __DIR__ . '/../app/views/admin/users.php';
         break;
         

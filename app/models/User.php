@@ -216,6 +216,100 @@ class User {
     }
     
     /**
+     * Obter contagem total de usuários ativos
+     */
+    public function getUserCount() {
+        $stmt = $this->db->prepare("SELECT COUNT(*) as total FROM users WHERE ativo = 1");
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result ? (int)$result['total'] : 0;
+    }
+    
+    /**
+     * Listar todos os usuários (para admin)
+     */
+    public function getAllUsers() {
+        $stmt = $this->db->prepare("
+            SELECT id, nome, email, tipo, avatar, display_title, ativo,
+                   DATE_FORMAT(data_criacao, '%Y-%m-%d %H:%i:%s') as data_criacao,
+                   DATE_FORMAT(ultimo_login, '%Y-%m-%d %H:%i:%s') as ultimo_login
+            FROM users
+            ORDER BY data_criacao DESC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+    
+    /**
+     * Atualizar dados de usuário (admin)
+     */
+    public function updateUser(int $userId, array $data): array {
+        try {
+            $fields = [];
+            $values = [];
+            
+            if (isset($data['nome'])) {
+                $fields[] = 'nome = ?';
+                $values[] = $data['nome'];
+            }
+            if (isset($data['email'])) {
+                $fields[] = 'email = ?';
+                $values[] = $data['email'];
+            }
+            if (isset($data['tipo'])) {
+                $fields[] = 'tipo = ?';
+                $values[] = $data['tipo'];
+            }
+            if (isset($data['ativo'])) {
+                $fields[] = 'ativo = ?';
+                $values[] = $data['ativo'];
+            }
+            
+            if (empty($fields)) {
+                return ['success' => false, 'message' => 'Nenhum campo para atualizar'];
+            }
+            
+            $fields[] = 'updated_at = CURRENT_TIMESTAMP';
+            $values[] = $userId;
+            
+            $sql = "UPDATE users SET " . implode(', ', $fields) . " WHERE id = ?";
+            $stmt = $this->db->prepare($sql);
+            $ok = $stmt->execute($values);
+            
+            return $ok ? ['success' => true] : ['success' => false, 'message' => 'Falha ao atualizar'];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Erro: ' . $e->getMessage()];
+        }
+    }
+    
+    /**
+     * Deletar usuário (soft delete - marca como inativo)
+     */
+    public function deleteUser(int $userId): array {
+        try {
+            $stmt = $this->db->prepare("UPDATE users SET ativo = 0, updated_at = CURRENT_TIMESTAMP WHERE id = ?");
+            $ok = $stmt->execute([$userId]);
+            return $ok ? ['success' => true] : ['success' => false, 'message' => 'Falha ao deletar'];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Erro: ' . $e->getMessage()];
+        }
+    }
+    
+    /**
+     * Resetar senha de usuário (admin)
+     */
+    public function resetPassword(int $userId, string $newPassword): array {
+        try {
+            $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $stmt = $this->db->prepare("UPDATE users SET senha = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?");
+            $ok = $stmt->execute([$hash, $userId]);
+            return $ok ? ['success' => true] : ['success' => false, 'message' => 'Falha ao resetar senha'];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => 'Erro: ' . $e->getMessage()];
+        }
+    }
+    
+    /**
      * Verificar se email já existe
      */
     private function emailExists($email) {
