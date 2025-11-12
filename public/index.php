@@ -263,6 +263,11 @@ switch ($path) {
         include __DIR__ . '/../app/views/admin/content-management-rpg/classes.php';
         break;
     
+    case '/admin/content-management-rpg/weapons':
+        requireAdmin();
+        include __DIR__ . '/../app/views/admin/content-management-rpg/weapons.php';
+        break;
+    
     case '/admin/content-management-rpg/habilidades':
         requireAdmin();
         include __DIR__ . '/../app/views/admin/content-management-rpg/habilidades.php';

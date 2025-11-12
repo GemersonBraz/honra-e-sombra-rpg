@@ -16,8 +16,56 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 // Conectar ao banco
 $conn = getDB();
 
-// Buscar todas as classes
-$stmt = $conn->query("SELECT * FROM classes ORDER BY nome ASC");
+// Parâmetros de paginação e filtros
+$page = isset($_GET['p']) ? max(1, (int)$_GET['p']) : 1;
+$perPage = 10;
+$offset = ($page - 1) * $perPage;
+
+// Filtros
+$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
+$filterElemento = isset($_GET['elemento']) ? $_GET['elemento'] : '';
+$filterAtivo = isset($_GET['ativo']) ? $_GET['ativo'] : '';
+$orderBy = isset($_GET['order']) ? $_GET['order'] : 'id';
+$orderDir = isset($_GET['dir']) && $_GET['dir'] === 'desc' ? 'DESC' : 'ASC';
+
+// Construir query com filtros
+$where = [];
+$params = [];
+
+if ($searchTerm) {
+    $where[] = "(nome LIKE :search OR descricao LIKE :search OR especialidade LIKE :search)";
+    $params[':search'] = "%{$searchTerm}%";
+}
+
+if ($filterElemento) {
+    $where[] = "elemento_afinidade = :elemento";
+    $params[':elemento'] = $filterElemento;
+}
+
+if ($filterAtivo !== '') {
+    $where[] = "ativo = :ativo";
+    $params[':ativo'] = (int)$filterAtivo;
+}
+
+$whereClause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
+
+// Contar total de registros (com filtros)
+$countQuery = "SELECT COUNT(*) FROM classes {$whereClause}";
+$stmtCount = $conn->prepare($countQuery);
+$stmtCount->execute($params);
+$totalClasses = $stmtCount->fetchColumn();
+$totalPages = ceil($totalClasses / $perPage);
+
+// Validar colunas permitidas para ordenação (segurança)
+$allowedOrder = ['id', 'nome', 'hp_base', 'atk_base', 'def_base', 'elemento_afinidade'];
+if (!in_array($orderBy, $allowedOrder)) {
+    $orderBy = 'id';
+}
+
+// Buscar classes com paginação e filtros
+$query = "SELECT * FROM classes {$whereClause} ORDER BY {$orderBy} {$orderDir} LIMIT {$perPage} OFFSET {$offset}";
+$stmt = $conn->prepare($query);
+$stmt->execute($params);
 $classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Buscar elementos para dropdown
@@ -39,7 +87,7 @@ $elementos = $conn->query("SELECT nome FROM elementos ORDER BY nome")->fetchAll(
                     <div>
                         <h1 class="font-title text-2xl font-bold text-primary">Gerenciar Classes</h1>
                         <p class="text-text/70 text-sm mt-1">
-                            Total de <?= count($classes) ?> classes cadastradas
+                            Total de <?= $totalClasses ?> classes cadastradas • Mostrando <?= count($classes) ?> de <?= $totalClasses ?>
                         </p>
                     </div>
                 </div>
@@ -51,6 +99,83 @@ $elementos = $conn->query("SELECT nome FROM elementos ORDER BY nome")->fetchAll(
                     Voltar
                 </button>
             </div>
+        </div>
+        
+        <!-- Filtros e Busca -->
+        <div class="card p-4 mb-4">
+            <form method="GET" action="" class="grid md:grid-cols-4 gap-4">
+                <input type="hidden" name="page" value="admin/content-management-rpg/classes">
+                
+                <!-- Busca por nome/descrição -->
+                <div>
+                    <label class="block text-sm font-semibold text-text/90 mb-2 flex items-center gap-2">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/magnifying-glass.svg" alt="Buscar" class="w-4 h-4 icon-primary">
+                        Buscar
+                    </label>
+                    <input type="text" 
+                           name="search" 
+                           value="<?= htmlspecialchars($searchTerm) ?>"
+                           placeholder="Nome, descrição ou especialidade..."
+                           class="w-full px-4 py-2 rounded-lg border-2 border-amber-200 dark:border-amber-600/30 bg-background text-text placeholder:text-text/40 focus:outline-none focus:border-primary dark:focus:border-primary transition-colors">
+                </div>
+                
+                <!-- Filtro por Elemento -->
+                <div>
+                    <label class="block text-sm font-semibold text-text/90 mb-2 flex items-center gap-2">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/burning-embers.svg" alt="Elemento" class="w-4 h-4 icon-primary">
+                        Elemento
+                    </label>
+                    <select name="elemento" class="w-full px-4 py-2 rounded-lg border-2 border-amber-200 dark:border-amber-600/30 bg-background text-text focus:outline-none focus:border-primary dark:focus:border-primary transition-colors">
+                        <option value="">Todos os elementos</option>
+                        <?php foreach ($elementos as $elem): ?>
+                            <option value="<?= htmlspecialchars($elem) ?>" <?= $filterElemento === $elem ? 'selected' : '' ?>>
+                                <?= htmlspecialchars(ucfirst($elem)) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                
+                <!-- Filtro por Status -->
+                <div>
+                    <label class="block text-sm font-semibold text-text/90 mb-2 flex items-center gap-2">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/lightning-bow.svg" alt="Status" class="w-4 h-4 icon-primary">
+                        Status
+                    </label>
+                    <select name="ativo" class="w-full px-4 py-2 rounded-lg border-2 border-amber-200 dark:border-amber-600/30 bg-background text-text focus:outline-none focus:border-primary dark:focus:border-primary transition-colors">
+                        <option value="">Todos</option>
+                        <option value="1" <?= $filterAtivo === '1' ? 'selected' : '' ?>>Ativas</option>
+                        <option value="0" <?= $filterAtivo === '0' ? 'selected' : '' ?>>Inativas</option>
+                    </select>
+                </div>
+                
+                <!-- Ordenação -->
+                <div>
+                    <label class="block text-sm font-semibold text-text/90 mb-2 flex items-center gap-2">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/stairs.svg" alt="Ordenar" class="w-4 h-4 icon-primary">
+                        Ordenar por
+                    </label>
+                    <select name="order" class="w-full px-4 py-2 rounded-lg border-2 border-amber-200 dark:border-amber-600/30 bg-background text-text focus:outline-none focus:border-primary dark:focus:border-primary transition-colors" onchange="this.form.submit()">
+                        <option value="id" <?= $orderBy === 'id' ? 'selected' : '' ?>>ID</option>
+                        <option value="nome" <?= $orderBy === 'nome' ? 'selected' : '' ?>>Nome</option>
+                        <option value="hp_base" <?= $orderBy === 'hp_base' ? 'selected' : '' ?>>HP</option>
+                        <option value="atk_base" <?= $orderBy === 'atk_base' ? 'selected' : '' ?>>ATK</option>
+                        <option value="def_base" <?= $orderBy === 'def_base' ? 'selected' : '' ?>>DEF</option>
+                    </select>
+                </div>
+                
+                <!-- Botões -->
+                <div class="md:col-span-4 flex gap-2 justify-end">
+                    <button type="submit" class="btn-primary inline-flex items-center gap-2">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/magnifying-glass.svg" alt="Filtrar" class="w-4 h-4 icon-white">
+                        Aplicar Filtros
+                    </button>
+                    <a href="<?= SITE_URL ?>/public/index.php?page=admin/content-management-rpg/classes" 
+                       class="btn-outline inline-flex items-center gap-2">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/cancel.svg" alt="Limpar" class="w-4 h-4 icon-muted">
+                        Limpar
+                    </a>
+                </div>
+            </form>
         </div>
         
         <!-- Botão Adicionar Classe -->
@@ -143,14 +268,87 @@ $elementos = $conn->query("SELECT nome FROM elementos ORDER BY nome")->fetchAll(
                         
                         <?php if (empty($classes)): ?>
                         <tr>
-                            <td colspan="10" class="text-center text-text/60 py-8">
-                                Nenhuma classe cadastrada ainda.
+                            <td colspan="10" class="text-center py-12">
+                                <div class="text-text/50">
+                                    <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/helmet-head-shot.svg" 
+                                         alt="Sem classes" 
+                                         class="w-16 h-16 mx-auto mb-4 opacity-30 icon-muted">
+                                    <p class="text-lg font-heading">Nenhuma classe encontrada</p>
+                                    <p class="text-sm mt-2">
+                                        <?= $searchTerm || $filterElemento || $filterAtivo !== '' ? 'Tente ajustar os filtros' : 'Clique em "Adicionar Classe" para começar' ?>
+                                    </p>
+                                </div>
                             </td>
                         </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
             </div>
+            
+            <!-- Paginação -->
+            <?php if ($totalPages > 1): ?>
+            <div class="border-t border-border/30 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-text/70">
+                        Página <?= $page ?> de <?= $totalPages ?>
+                    </div>
+                    <div class="flex gap-2">
+                        <?php
+                        // Construir URL base mantendo filtros
+                        $baseUrl = SITE_URL . '/public/index.php?page=admin/content-management-rpg/classes';
+                        if ($searchTerm) $baseUrl .= '&search=' . urlencode($searchTerm);
+                        if ($filterElemento) $baseUrl .= '&elemento=' . urlencode($filterElemento);
+                        if ($filterAtivo !== '') $baseUrl .= '&ativo=' . urlencode($filterAtivo);
+                        if ($orderBy !== 'id') $baseUrl .= '&order=' . urlencode($orderBy);
+                        if ($orderDir !== 'ASC') $baseUrl .= '&dir=' . urlencode(strtolower($orderDir));
+                        ?>
+                        
+                        <!-- Primeira página -->
+                        <?php if ($page > 1): ?>
+                            <a href="<?= $baseUrl ?>&p=1" 
+                               class="px-3 py-2 rounded-lg border border-border hover:bg-muted/20 transition-colors">
+                                ««
+                            </a>
+                            <a href="<?= $baseUrl ?>&p=<?= $page - 1 ?>" 
+                               class="px-3 py-2 rounded-lg border border-border hover:bg-muted/20 transition-colors">
+                                ‹
+                            </a>
+                        <?php else: ?>
+                            <span class="px-3 py-2 rounded-lg border border-border/30 text-text/30 cursor-not-allowed">««</span>
+                            <span class="px-3 py-2 rounded-lg border border-border/30 text-text/30 cursor-not-allowed">‹</span>
+                        <?php endif; ?>
+                        
+                        <!-- Páginas numeradas -->
+                        <?php
+                        $startPage = max(1, $page - 2);
+                        $endPage = min($totalPages, $page + 2);
+                        
+                        for ($i = $startPage; $i <= $endPage; $i++):
+                        ?>
+                            <a href="<?= $baseUrl ?>&p=<?= $i ?>" 
+                               class="px-3 py-2 rounded-lg border <?= $i === $page ? 'bg-primary text-white border-primary' : 'border-border hover:bg-muted/20' ?> transition-colors">
+                                <?= $i ?>
+                            </a>
+                        <?php endfor; ?>
+                        
+                        <!-- Última página -->
+                        <?php if ($page < $totalPages): ?>
+                            <a href="<?= $baseUrl ?>&p=<?= $page + 1 ?>" 
+                               class="px-3 py-2 rounded-lg border border-border hover:bg-muted/20 transition-colors">
+                                ›
+                            </a>
+                            <a href="<?= $baseUrl ?>&p=<?= $totalPages ?>" 
+                               class="px-3 py-2 rounded-lg border border-border hover:bg-muted/20 transition-colors">
+                                »»
+                            </a>
+                        <?php else: ?>
+                            <span class="px-3 py-2 rounded-lg border border-border/30 text-text/30 cursor-not-allowed">›</span>
+                            <span class="px-3 py-2 rounded-lg border border-border/30 text-text/30 cursor-not-allowed">»»</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
         
     </div>

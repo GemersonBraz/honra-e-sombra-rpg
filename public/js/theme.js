@@ -21,7 +21,8 @@ class ThemeSystem {
     }
 
     init() {
-        this.applyTheme(this.currentTheme);
+        // Não precisa aplicar novamente, já foi aplicado no inline script do header
+        // Apenas atualizar o botão
         this.setupToggleButton();
     }
 

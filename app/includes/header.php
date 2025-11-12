@@ -4,7 +4,7 @@ require_once __DIR__ . '/functions.php';
 $basePath = base_path();
 ?>
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="honra">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,14 @@ $basePath = base_path();
     <meta name="author" content="Sistema Honra e Sombra">
     
     <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - ' : '' ?>Honra e Sombra RPG</title>
+    
+    <!-- Script inline para aplicar tema ANTES do HTML renderizar (evita flash) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('honra-sombra-theme') || 'honra';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="<?= $basePath ?>img/logo-honra-sombra.png">

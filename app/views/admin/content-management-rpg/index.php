@@ -20,12 +20,14 @@ $conn = getDB();
 // Contar registros de cada tabela
 try {
     $countClasses = $conn->query("SELECT COUNT(*) FROM classes")->fetchColumn();
+    $countWeapons = $conn->query("SELECT COUNT(*) FROM weapons")->fetchColumn();
     $countHabilidades = $conn->query("SELECT COUNT(*) FROM habilidades_disponiveis")->fetchColumn();
     $countGolpes = $conn->query("SELECT COUNT(*) FROM golpes_templates")->fetchColumn();
     $countElementos = $conn->query("SELECT COUNT(*) FROM elementos")->fetchColumn();
 } catch (Exception $e) {
     error_log("Erro ao contar registros: " . $e->getMessage());
     $countClasses = 0;
+    $countWeapons = 0;
     $countHabilidades = 0;
     $countGolpes = 0;
     $countElementos = 0;
@@ -80,6 +82,25 @@ try {
                     </p>
                     <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                         <span class="text-2xl font-bold text-blue-600 dark:text-blue-400"><?= $countClasses ?></span>
+                        <span class="text-sm text-text/70">cadastradas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Armas -->
+            <div class="card hover:scale-105 transform duration-200 border-l-4 border-emerald-500 cursor-pointer"
+                 onclick="window.location.href='<?= SITE_URL ?>/public/index.php?page=admin/content-management-rpg/weapons'">
+                <div class="text-center p-6">
+                    <div class="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/delapouite/diamond-hilt.svg" alt="Armas" 
+                             class="w-10 h-10 icon-primary">
+                    </div>
+                    <h3 class="font-heading text-xl font-semibold text-primary mb-2">Armas</h3>
+                    <p class="text-text/70 text-sm mb-3">
+                        Gerencie armas, equipamentos e itens do sistema.
+                    </p>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                        <span class="text-2xl font-bold text-emerald-600 dark:text-emerald-400"><?= $countWeapons ?></span>
                         <span class="text-sm text-text/70">cadastradas</span>
                     </div>
                 </div>
