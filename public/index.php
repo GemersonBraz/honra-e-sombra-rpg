@@ -252,6 +252,32 @@ switch ($path) {
         include __DIR__ . '/../app/views/admin/users.php';
         break;
         
+    case '/admin/content-management-rpg/index':
+    case '/admin/content-management-rpg':
+        requireAdmin();
+        include __DIR__ . '/../app/views/admin/content-management-rpg/index.php';
+        break;
+    
+    case '/admin/content-management-rpg/classes':
+        requireAdmin();
+        include __DIR__ . '/../app/views/admin/content-management-rpg/classes.php';
+        break;
+    
+    case '/admin/content-management-rpg/habilidades':
+        requireAdmin();
+        include __DIR__ . '/../app/views/admin/content-management-rpg/habilidades.php';
+        break;
+    
+    case '/admin/content-management-rpg/golpes':
+        requireAdmin();
+        include __DIR__ . '/../app/views/admin/content-management-rpg/golpes.php';
+        break;
+    
+    case '/admin/content-management-rpg/elementos':
+        requireAdmin();
+        include __DIR__ . '/../app/views/admin/content-management-rpg/elementos.php';
+        break;
+    
     case '/toast-demo':
         // Página de demonstração dos toasts
         include __DIR__ . '/../app/views/toast-demo.php';

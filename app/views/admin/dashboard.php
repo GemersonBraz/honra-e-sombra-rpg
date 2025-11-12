@@ -54,6 +54,11 @@ $stats = [
                     <img src="<?= $basePath ?>img/icons-1x1/lorc/crowned-skull.svg" alt="Usuários" class="w-4 h-4 icon-white">
                     Ver Usuários
                 </button>
+                <button onclick="window.location.href='index.php?page=admin/content-management-rpg/index'" 
+                        class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg font-heading text-sm inline-flex items-center gap-2">
+                    <img src="<?= $basePath ?>img/icons-1x1/lorc/gems.svg" alt="Conteúdo" class="w-4 h-4 icon-white">
+                    Conteúdo RPG
+                </button>
                 <a href="index.php?page=perfil" 
                    class="btn-secondary inline-flex items-center gap-2">
                     <img src="<?= $basePath ?>img/icons-1x1/lorc/quill-ink.svg" alt="Perfil" class="w-4 h-4 icon-white">
@@ -230,11 +235,11 @@ $stats = [
                     </div>
                     <h3 class="font-heading text-lg font-semibold text-primary mb-2">Conteúdo RPG</h3>
                     <p class="text-text/70 text-sm mb-4">
-                        Gerenciar classes, habilidades, magias e bestiário.
+                        Gerenciar classes, habilidades, golpes e elementos.
                     </p>
-                    <button onclick="systemToasts.featureComingSoon('Gerenciamento de Conteúdo')" 
+                    <button onclick="window.location.href='index.php?page=admin/content-management-rpg/index'" 
                             class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg font-heading font-medium text-sm">
-                        Em Breve - Parte 3
+                        Gerenciar Conteúdo
                     </button>
                 </div>
             </div>
