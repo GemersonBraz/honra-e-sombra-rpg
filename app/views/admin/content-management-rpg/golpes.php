@@ -134,7 +134,7 @@ require_once __DIR__ . '/../../../includes/navbar.php';
                         
                         <!-- Dano -->
                         <div class="p-3 rounded-lg bg-rose-500/5 border border-rose-500/20">
-                            <p class="text-xs text-text/60 mb-1">⚔️ Dano</p>
+                            <p class="text-xs text-text/60 mb-1"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/crossed-swords.svg" alt="Dano" class="w-4 h-4 inline-block mr-1 icon-muted"> Dano</p>
                             <p class="font-bold text-rose-600 dark:text-rose-400">
                                 <?= $golpe['dano_base'] ?><?= $golpe['dano_extra'] > 0 ? ' +' . $golpe['dano_extra'] : '' ?>
                             </p>
@@ -142,7 +142,7 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 
                         <!-- Bônus Defesa -->
                         <div class="p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
-                            <p class="text-xs text-text/60 mb-1">🛡️ Defesa</p>
+                            <p class="text-xs text-text/60 mb-1"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/shield-echoes.svg" alt="Defesa" class="w-4 h-4 inline-block mr-1 icon-muted"> Defesa</p>
                             <p class="font-bold text-blue-600 dark:text-blue-400">
                                 +<?= $golpe['bonus_defesa'] ?? 0 ?>
                             </p>
@@ -150,7 +150,7 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 
                         <!-- Elemento -->
                         <div class="p-3 rounded-lg bg-purple-500/5 border border-purple-500/20">
-                            <p class="text-xs text-text/60 mb-1">🔮 Elemento</p>
+                            <p class="text-xs text-text/60 mb-1"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/crystal-ball.svg" alt="Elemento" class="w-4 h-4 inline-block mr-1 icon-muted"> Elemento</p>
                             <p class="font-bold text-purple-600 dark:text-purple-400 capitalize">
                                 <?= $golpe['elemento'] ?? 'Neutro' ?>
                             </p>
@@ -158,7 +158,7 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 
                         <!-- Nível -->
                         <div class="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
-                            <p class="text-xs text-text/60 mb-1">🏅 Nível</p>
+                            <p class="text-xs text-text/60 mb-1"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/medal.svg" alt="Nível" class="w-4 h-4 inline-block mr-1 icon-muted"> Nível</p>
                             <span class="px-2 py-1 rounded text-xs font-semibold capitalize inline-block
                                 <?php
                                 switch($golpe['nivel_minimo']) {
@@ -174,7 +174,7 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 
                         <!-- Usos -->
                         <div class="p-3 rounded-lg bg-cyan-500/5 border border-cyan-500/20">
-                            <p class="text-xs text-text/60 mb-1">🔄 Usos Máx.</p>
+                            <p class="text-xs text-text/60 mb-1"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/cycle.svg" alt="Usos" class="w-4 h-4 inline-block mr-1 icon-muted"> Usos Máx.</p>
                             <p class="font-bold text-cyan-600 dark:text-cyan-400">
                                 <?= $golpe['usos_maximos'] ?>x
                             </p>
@@ -187,25 +187,25 @@ require_once __DIR__ . '/../../../includes/navbar.php';
                         
                         <?php if ($golpe['duracao_rodadas'] > 1): ?>
                         <div class="flex items-center gap-2 text-sm">
-                            <span class="text-text/60">⏱️ Duração:</span>
+                            <span class="text-text/60"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/stopwatch.svg" alt="Duração" class="w-4 h-4 inline-block mr-1 icon-muted"> Duração:</span>
                             <span class="font-semibold text-primary"><?= $golpe['duracao_rodadas'] ?> rodadas</span>
                         </div>
                         <?php endif; ?>
 
                         <div class="flex items-center gap-2 text-sm">
-                            <span class="text-text/60">💰 Custo:</span>
+                            <span class="text-text/60"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/crown-coin.svg" alt="Custo" class="w-4 h-4 inline-block mr-1 icon-muted"> Custo:</span>
                             <span class="font-semibold text-primary"><?= $golpe['custo_pontos'] ?? 1 ?> pts</span>
                         </div>
 
                         <div class="flex items-start gap-2 text-sm">
-                            <span class="text-text/60 flex-shrink-0">🎯 Classes:</span>
+                            <span class="text-text/60 flex-shrink-0"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/archery-target.svg" alt="Classes" class="w-4 h-4 inline-block mr-1 icon-muted"> Classes:</span>
                             <span class="font-semibold text-primary capitalize">
                                 <?= $golpe['classes_permitidas'] ? htmlspecialchars($golpe['classes_permitidas']) : 'Todas' ?>
                             </span>
                         </div>
 
                         <div class="flex items-start gap-2 text-sm">
-                            <span class="text-text/60 flex-shrink-0">📚 Habilidade:</span>
+                            <span class="text-text/60 flex-shrink-0"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/open-book.svg" alt="Habilidade" class="w-4 h-4 inline-block mr-1 icon-muted"> Habilidade:</span>
                             <span class="font-semibold text-primary">
                                 <?= $golpe['habilidade_requerida_id'] ? 'ID #' . $golpe['habilidade_requerida_id'] : 'Nenhuma' ?>
                             </span>
@@ -213,12 +213,12 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 
                         <?php if ($golpe['efeitos_especiais']): ?>
                         <div class="text-sm pt-2 border-t border-primary/5">
-                            <span class="text-text/60 font-semibold">✨ Efeitos:</span>
+                            <span class="text-text/60 font-semibold"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/spark-spirit.svg" alt="Efeitos" class="w-4 h-4 inline-block mr-1 icon-muted"> Efeitos:</span>
                             <p class="text-primary mt-1 text-xs leading-relaxed"><?= htmlspecialchars($golpe['efeitos_especiais']) ?></p>
                         </div>
                         <?php else: ?>
                         <div class="flex items-center gap-2 text-sm">
-                            <span class="text-text/60">✨ Efeitos:</span>
+                            <span class="text-text/60"><img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/spark-spirit.svg" alt="Efeitos" class="w-4 h-4 inline-block mr-1 icon-muted"> Efeitos:</span>
                             <span class="font-semibold text-text/40">Nenhum</span>
                         </div>
                         <?php endif; ?>
@@ -233,7 +233,7 @@ require_once __DIR__ . '/../../../includes/navbar.php';
                             </svg>
                             Editar
                         </button>
-                        <button type="button" onclick="deleteGolpe(<?= $golpe['id'] ?>, '<?= htmlspecialchars($golpe['nome'], ENT_QUOTES) ?>')" 
+                        <button type="button" onclick="confirmDeleteGolpe(<?= $golpe['id'] ?>, '<?= htmlspecialchars($golpe['nome'], ENT_QUOTES) ?>')" 
                                 class="flex-1 px-4 py-2 rounded-lg bg-danger/10 hover:bg-danger/20 text-danger font-semibold transition-colors inline-flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -337,6 +337,44 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 
     </div>
 </main>
+
+<!-- Modal de Confirmação de Exclusão (padrão unificado) -->
+<div id="deleteGolpeModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4" style="z-index: 10001; display:none; opacity:0; transition: opacity .3s ease;">
+    <div class="card max-w-md w-full" onclick="event.stopPropagation()">
+        <div class="p-6 text-center">
+            <div class="w-16 h-16 mx-auto bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
+                <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/skull-crossed-bones.svg" alt="Excluir" class="w-8 h-8">
+            </div>
+            <h3 class="font-title text-xl font-bold text-primary mb-2">Confirmar Exclusão</h3>
+            <p class="text-text/70 mb-1">Tem certeza que deseja excluir o golpe</p>
+            <p id="deleteGolpeName" class="font-semibold text-primary mb-4"></p>
+            <p class="text-sm text-red-600 dark:text-red-400 font-semibold">⚠️ Esta ação não pode ser desfeita!</p>
+            <div class="flex items-center gap-3 mt-6">
+                <button onclick="closeDeleteGolpeModal()" class="btn-outline flex-1">Cancelar</button>
+                <button onclick="executeDeleteGolpe()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors flex-1">Deletar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmação para remover imagem -->
+<div id="deleteImageModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4" style="z-index: 10001; display:none; opacity:0; transition: opacity .3s ease;">
+    <div class="card max-w-md w-full" onclick="event.stopPropagation()">
+        <div class="p-6 text-center">
+            <div class="w-16 h-16 mx-auto bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
+                <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/triple-skulls.svg" alt="Remover imagem" class="w-8 h-8">
+            </div>
+            <h3 class="font-title text-xl font-bold text-primary mb-2">Remover Imagem</h3>
+            <p class="text-text/70 mb-1">Deseja remover a imagem deste golpe?</p>
+            <p class="text-sm text-red-600 dark:text-red-400 font-semibold">⚠️ Esta ação não pode ser desfeita!</p>
+            <div class="flex items-center gap-3 mt-6">
+                <button onclick="closeImageDeleteModal()" class="btn-outline flex-1">Cancelar</button>
+                <button onclick="executeDeleteImage()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors flex-1">Remover</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
 
 <!-- Modal de Criar/Editar Golpe -->
 <div id="golpeModal" class="modal fixed inset-0 bg-black/50 backdrop-blur-sm items-center justify-center p-4" style="z-index: 9999;">
@@ -543,8 +581,12 @@ require_once __DIR__ . '/../../../includes/navbar.php';
                                    onchange="previewImage(event)">
                             <p class="text-xs text-text/60 mt-1">PNG, JPG ou GIF - Máximo 2MB</p>
                         </div>
-                        <div id="imagePreview" class="hidden w-24 h-24 rounded-lg border-2 border-primary/20 overflow-hidden bg-background-secondary">
+                        <div id="imagePreview" class="hidden relative w-24 h-24 rounded-lg border-2 border-primary/20 overflow-hidden bg-background-secondary">
                             <img id="previewImg" src="" alt="Preview" class="w-full h-full object-cover">
+                            <!-- Botão deletar imagem -->
+                            <button type="button" id="btnDeleteImage" onclick="openDeleteImageModal()" class="hidden absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white w-7 h-7 rounded-full shadow-md flex items-center justify-center" title="Remover imagem">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -577,6 +619,39 @@ require_once __DIR__ . '/../../../includes/navbar.php';
 </div>
 
 <script>
+// Modal de confirmação (padrão elementos)
+let deleteGolpeId = null;
+function confirmDeleteGolpe(id, nome) {
+    deleteGolpeId = id;
+    document.getElementById('deleteGolpeName').textContent = nome;
+    const modal = document.getElementById('deleteGolpeModal');
+    modal.style.display = 'flex';
+    setTimeout(()=>{ modal.style.opacity = '1'; },10);
+}
+function closeDeleteGolpeModal() {
+    const modal = document.getElementById('deleteGolpeModal');
+    modal.style.opacity = '0';
+    setTimeout(()=>{ modal.style.display = 'none'; deleteGolpeId = null; },300);
+}
+document.getElementById('deleteGolpeModal')?.addEventListener('click', function(e){
+    if(e.target === this){ closeDeleteGolpeModal(); }
+});
+// Modal excluir imagem
+let deleteImageModal = null;
+function openDeleteImageModal(){
+    if(!document.getElementById('previewImg').src) return;
+    showImageDeleteModal();
+}
+function showImageDeleteModal(){
+    const modal = document.getElementById('deleteImageModal');
+    modal.style.display='flex';
+    setTimeout(()=> modal.style.opacity='1',10);
+}
+function closeImageDeleteModal(){
+    const modal = document.getElementById('deleteImageModal');
+    modal.style.opacity='0';
+    setTimeout(()=> modal.style.display='none',300);
+}
 // Abrir modal
 function openModal(golpeId = null) {
     const modal = document.getElementById('golpeModal');
@@ -599,6 +674,7 @@ function openModal(golpeId = null) {
         form.reset();
         document.getElementById('golpe_id').value = '';
         document.getElementById('imagePreview').classList.add('hidden');
+        document.getElementById('btnDeleteImage').classList.add('hidden');
     }
     
     loadHabilidades();
@@ -620,6 +696,7 @@ function previewImage(event) {
         reader.onload = function(e) {
             document.getElementById('previewImg').src = e.target.result;
             document.getElementById('imagePreview').classList.remove('hidden');
+            document.getElementById('btnDeleteImage').classList.add('hidden'); // ao selecionar nova imagem, esconder botão de remover imagem atual
         }
         reader.readAsDataURL(file);
     }
@@ -678,6 +755,8 @@ function loadGolpeData(golpeId) {
                     const imgUrl = `/Honra-e-Sombra/public/img/golpes/${golpe.imagem}`;
                     document.getElementById('previewImg').src = imgUrl;
                     document.getElementById('imagePreview').classList.remove('hidden');
+                    document.getElementById('btnDeleteImage').classList.remove('hidden');
+                    document.getElementById('btnDeleteImage').dataset.golpeId = golpe.id;
                 }
             } else {
                 toast.error('Erro ao carregar dados do golpe', {
@@ -758,37 +837,60 @@ function saveGolpe(event) {
 }
 
 // Deletar golpe
-function deleteGolpe(golpeId, golpeNome) {
-    if (!confirm(`Tem certeza que deseja deletar o golpe "${golpeNome}"?\n\nEsta ação não pode ser desfeita.`)) {
-        return;
-    }
-    
+function executeDeleteGolpe() {
+    if(!deleteGolpeId) return;
     const formData = new FormData();
     formData.append('action', 'delete');
-    formData.append('id', golpeId);
-    
+    formData.append('id', deleteGolpeId);
     fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/golpes_handler.php', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(r => r.text())
+    .then(text => {
+        let data; try { data = JSON.parse(text); } catch(e){ console.error('Parse JSON erro:', e, text); toast.error('Erro no servidor'); return; }
         if (data.success) {
-            toast.success(data.message || 'Golpe deletado com sucesso!', {
-                title: 'Sucesso'
-            });
-            setTimeout(() => location.reload(), 1500);
+            toast.success(data.message || 'Golpe deletado com sucesso!');
+            closeDeleteGolpeModal();
+            setTimeout(()=>location.reload(), 1000);
         } else {
-            toast.error(data.message || 'Erro ao deletar golpe', {
-                title: 'Erro'
-            });
+            toast.error(data.message || 'Erro ao deletar golpe');
         }
     })
     .catch(error => {
         console.error('Erro:', error);
-        toast.error('Erro ao processar requisição', {
-            title: 'Erro'
-        });
+        toast.error('Erro ao processar requisição');
+    });
+}
+
+// Remover apenas a imagem do golpe
+function executeDeleteImage(){
+    const golpeId = deleteGolpeId || document.getElementById('golpe_id').value;
+    if(!golpeId){ closeImageDeleteModal(); return; }
+    const formData = new FormData();
+    formData.append('action','delete_image');
+    formData.append('id', golpeId);
+    fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/golpes_handler.php',{
+        method:'POST',
+        body: formData
+    })
+    .then(r=>r.text())
+    .then(text=>{
+        let data; try{ data = JSON.parse(text);}catch(e){ console.error('Parse JSON erro:', e, text); toast.error('Erro no servidor'); return; }
+        if(data.success){
+            toast.success(data.message || 'Imagem removida com sucesso');
+            document.getElementById('previewImg').src='';
+            document.getElementById('imagePreview').classList.add('hidden');
+            document.getElementById('btnDeleteImage').classList.add('hidden');
+            document.getElementById('imagem').value = '';
+            closeImageDeleteModal();
+        } else {
+            toast.error(data.message || 'Erro ao remover imagem');
+        }
+    })
+    .catch(err=>{
+        console.error(err);
+        toast.error('Erro ao processar requisição');
     });
 }
 
@@ -797,6 +899,9 @@ document.getElementById('golpeModal')?.addEventListener('click', function(e) {
     if (e.target === this) {
         closeModal();
     }
+});
+document.getElementById('deleteImageModal')?.addEventListener('click', function(e){
+    if(e.target === this){ closeImageDeleteModal(); }
 });
 </script>
 

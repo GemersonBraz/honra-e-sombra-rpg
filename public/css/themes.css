@@ -646,6 +646,33 @@
     color: rgb(var(--text-muted));
 }
 
+/* Tema escuro: inputs/selects/textarea com contraste adequado mesmo sem .form-input */
+[data-theme="sombra"] input,
+[data-theme="sombra"] select,
+[data-theme="sombra"] textarea {
+    background-color: rgb(var(--surface));
+    color: rgb(var(--text));
+    border-color: rgb(var(--border));
+}
+
+[data-theme="sombra"] input::placeholder,
+[data-theme="sombra"] textarea::placeholder {
+    color: rgb(var(--text-muted));
+}
+
+/* Estilo do menu suspenso das opções no tema escuro */
+[data-theme="sombra"] select option {
+    background-color: rgb(var(--surface));
+    color: rgb(var(--text));
+}
+
+/* Estados comuns */
+input:disabled,
+select:disabled,
+textarea:disabled {
+    opacity: 0.7;
+}
+
 /* Transições suaves */
 .smooth-transition {
     transition: all 0.3s ease;
@@ -1046,4 +1073,15 @@ textarea:focus {
 
 [data-theme="sombra"] .hero-dot-sm {
     background: radial-gradient(circle at 30% 30%, rgb(241 245 249 / 0.06), rgb(var(--accent) / 0.7));
+}
+
+/* ===== TEXTO PADRÃO POR TEMA ===== */
+/* Garante que qualquer texto sem classe específica herde a cor correta do tema */
+body {
+    color: rgb(var(--text));
+}
+
+/* Utilitário opcional: força texto branco apenas no tema escuro */
+[data-theme="sombra"] .text-white-dark {
+    color: #ffffff;
 }

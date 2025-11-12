@@ -309,6 +309,39 @@ try {
                 'message' => 'Golpe deletado com sucesso!'
             ]);
             break;
+        
+        case 'delete_image':
+            // Remover somente a imagem do golpe e limpar campo no banco
+            if (empty($_POST['id'])) {
+                throw new Exception('ID do golpe é obrigatório.');
+            }
+            $id = (int)$_POST['id'];
+            
+            // Buscar imagem atual
+            $stmt = $pdo->prepare("SELECT imagem FROM golpes_templates WHERE id = ?");
+            $stmt->execute([$id]);
+            $golpe = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$golpe) {
+                throw new Exception('Golpe não encontrado.');
+            }
+            
+            if (!empty($golpe['imagem'])) {
+                $uploadDir = dirname(__DIR__, 5) . '/public/img/golpes/';
+                $filepath = $uploadDir . $golpe['imagem'];
+                if (file_exists($filepath)) {
+                    @unlink($filepath);
+                }
+            }
+            
+            // Atualizar campo imagem para NULL
+            $stmt = $pdo->prepare("UPDATE golpes_templates SET imagem = NULL WHERE id = ?");
+            $stmt->execute([$id]);
+            
+            echo json_encode([
+                'success' => true,
+                'message' => 'Imagem removida com sucesso.'
+            ]);
+            break;
             
         case 'get':
             // Obter dados de um golpe específico
