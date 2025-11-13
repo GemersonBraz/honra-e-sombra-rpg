@@ -33,9 +33,11 @@ $orderDir = isset($_GET['dir']) && $_GET['dir'] === 'desc' ? 'DESC' : 'ASC';
 $where = [];
 $params = [];
 
-if ($searchTerm) {
-    $where[] = "(nome LIKE :search OR descricao LIKE :search OR tipo LIKE :search)";
-    $params[':search'] = "%{$searchTerm}%";
+if ($searchTerm !== '') {
+    $where[] = "(nome LIKE :search_nome OR descricao LIKE :search_descricao OR tipo LIKE :search_tipo)";
+    $params[':search_nome'] = "%{$searchTerm}%";
+    $params[':search_descricao'] = "%{$searchTerm}%";
+    $params[':search_tipo'] = "%{$searchTerm}%";
 }
 
 if ($filterCategoria) {
@@ -142,7 +144,7 @@ $habilidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Filtro por Nível -->
                 <div>
                     <label class="block text-sm font-semibold text-text/90 mb-2 flex items-center gap-2">
-                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/stairs.svg" alt="Nível" class="w-4 h-4 icon-primary">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/medal.svg" alt="Nível" class="w-4 h-4 icon-primary">
                         Nível Mínimo
                     </label>
                     <select name="nivel" class="w-full px-4 py-2 rounded-lg border-2 border-amber-200 dark:border-amber-600/30 bg-background text-text focus:outline-none focus:border-primary dark:focus:border-primary transition-colors capitalize">
@@ -157,7 +159,7 @@ $habilidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Filtro por Status -->
                 <div>
                     <label class="block text-sm font-semibold text-text/90 mb-2 flex items-center gap-2">
-                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/check-mark.svg" alt="Status" class="w-4 h-4 icon-primary">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/checked-shield.svg" alt="Status" class="w-4 h-4 icon-primary">
                         Status
                     </label>
                     <select name="ativo" class="w-full px-4 py-2 rounded-lg border-2 border-amber-200 dark:border-amber-600/30 bg-background text-text focus:outline-none focus:border-primary dark:focus:border-primary transition-colors">
@@ -175,7 +177,7 @@ $habilidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </button>
                     <a href="<?= SITE_URL ?>/public/index.php?page=admin/content-management-rpg/habilidades" 
                        class="btn-outline inline-flex items-center gap-2 flex-1">
-                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/cancel.svg" alt="Limpar" class="w-4 h-4 icon-muted">
+                        <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/cross-mark.svg" alt="Limpar" class="w-4 h-4 icon-muted">
                         Limpar
                     </a>
                 </div>
@@ -249,16 +251,16 @@ $habilidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </span>
                             </td>
                             <td class="text-center text-xs">
-                                <?php if ($habilidade['bonus_atk'] > 0): ?>
-                                    <span class="text-rose-600 dark:text-rose-400">ATK +<?= $habilidade['bonus_atk'] ?></span><br>
+                                <?php if ((int)$habilidade['bonus_atk'] !== 0): ?>
+                                    <span class="text-rose-600 dark:text-rose-400">ATK <?= ($habilidade['bonus_atk'] > 0 ? '+' : '') . (int)$habilidade['bonus_atk'] ?></span><br>
                                 <?php endif; ?>
-                                <?php if ($habilidade['bonus_def'] > 0): ?>
-                                    <span class="text-sky-600 dark:text-sky-400">DEF +<?= $habilidade['bonus_def'] ?></span><br>
+                                <?php if ((int)$habilidade['bonus_def'] !== 0): ?>
+                                    <span class="text-sky-600 dark:text-sky-400">DEF <?= ($habilidade['bonus_def'] > 0 ? '+' : '') . (int)$habilidade['bonus_def'] ?></span><br>
                                 <?php endif; ?>
-                                <?php if ($habilidade['bonus_hp'] > 0): ?>
-                                    <span class="text-emerald-600 dark:text-emerald-400">HP +<?= $habilidade['bonus_hp'] ?></span>
+                                <?php if ((int)$habilidade['bonus_hp'] !== 0): ?>
+                                    <span class="text-emerald-600 dark:text-emerald-400">HP <?= ($habilidade['bonus_hp'] > 0 ? '+' : '') . (int)$habilidade['bonus_hp'] ?></span>
                                 <?php endif; ?>
-                                <?php if (!$habilidade['bonus_atk'] && !$habilidade['bonus_def'] && !$habilidade['bonus_hp']): ?>
+                                <?php if ((int)$habilidade['bonus_atk'] === 0 && (int)$habilidade['bonus_def'] === 0 && (int)$habilidade['bonus_hp'] === 0): ?>
                                     <span class="text-text/30">-</span>
                                 <?php endif; ?>
                             </td>
@@ -393,7 +395,7 @@ $habilidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <span>Nova Habilidade</span>
             </h2>
             <button onclick="closeModal()" type="button" class="text-text/60 hover:text-danger transition-colors">
-                <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/cancel.svg" 
+                <img src="<?= SITE_URL ?>/public/img/icons-1x1/lorc/cross-mark.svg" 
                      alt="Fechar" 
                      class="w-6 h-6 icon-danger">
             </button>
@@ -608,7 +610,7 @@ let deleteHabilidadeId = null;
 // Carregar habilidades para o dropdown de pré-requisitos
 async function loadHabilidadesPrerequisitos() {
     try {
-        const response = await fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/habilidades_handler.php?action=list');
+        const response = await fetch('<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/habilidades_handler.php?action=list');
         const result = await response.json();
         
         const select = document.getElementById('habilidadePrerequisito');
@@ -770,7 +772,7 @@ async function executeDelete() {
         formData.append('action', 'delete');
         formData.append('id', deleteHabilidadeId);
 
-        const response = await fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/habilidades_handler.php', {
+        const response = await fetch('<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/habilidades_handler.php', {
             method: 'POST',
             body: formData
         });
@@ -810,7 +812,7 @@ document.getElementById('habilidadeForm').addEventListener('submit', async funct
     }
     
     try {
-        const response = await fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/habilidades_handler.php', {
+        const response = await fetch('<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/habilidades_handler.php', {
             method: 'POST',
             body: formData
         });

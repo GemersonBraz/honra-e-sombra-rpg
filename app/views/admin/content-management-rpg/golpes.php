@@ -704,7 +704,7 @@ function previewImage(event) {
 
 // Carregar habilidades disponíveis
 function loadHabilidades() {
-    fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/habilidades_handler.php?action=list')
+    fetch('<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/habilidades_handler.php?action=list')
         .then(response => response.json())
         .then(data => {
             const select = document.getElementById('habilidade_requerida_id');
@@ -725,7 +725,7 @@ function loadHabilidades() {
 
 // Carregar dados do golpe para edição
 function loadGolpeData(golpeId) {
-    fetch(`/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/golpes_handler.php?action=get&id=${golpeId}`)
+    fetch(`<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/golpes_handler.php?action=get&id=${golpeId}`)
         .then(response => response.json())
         .then(data => {
             if (data.success && data.golpe) {
@@ -752,7 +752,7 @@ function loadGolpeData(golpeId) {
                 
                 // Mostrar preview da imagem se existir
                 if (golpe.imagem) {
-                    const imgUrl = `/Honra-e-Sombra/public/img/golpes/${golpe.imagem}`;
+                    const imgUrl = `<?= SITE_URL ?>/public/img/golpes/${golpe.imagem}`;
                     document.getElementById('previewImg').src = imgUrl;
                     document.getElementById('imagePreview').classList.remove('hidden');
                     document.getElementById('btnDeleteImage').classList.remove('hidden');
@@ -792,7 +792,7 @@ function saveGolpe(event) {
         console.log(pair[0] + ': ' + pair[1]);
     }
     
-    const url = '/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/golpes_handler.php';
+    const url = '<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/golpes_handler.php';
     console.log('URL da requisição:', url);
     
     fetch(url, {
@@ -842,7 +842,7 @@ function executeDeleteGolpe() {
     const formData = new FormData();
     formData.append('action', 'delete');
     formData.append('id', deleteGolpeId);
-    fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/golpes_handler.php', {
+    fetch('<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/golpes_handler.php', {
         method: 'POST',
         body: formData
     })
@@ -870,7 +870,7 @@ function executeDeleteImage(){
     const formData = new FormData();
     formData.append('action','delete_image');
     formData.append('id', golpeId);
-    fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/golpes_handler.php',{
+    fetch('<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/golpes_handler.php',{
         method:'POST',
         body: formData
     })

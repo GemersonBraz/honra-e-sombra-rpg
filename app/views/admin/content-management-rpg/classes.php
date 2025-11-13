@@ -636,7 +636,7 @@ async function executeDelete() {
         formData.append('action', 'delete');
         formData.append('id', deleteClassId);
         
-        const response = await fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/classes_handler.php', {
+        const response = await fetch('<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/classes_handler.php', {
             method: 'POST',
             body: formData
         });
@@ -666,7 +666,7 @@ document.getElementById('classForm').addEventListener('submit', async function(e
     formData.set('ativo', ativoCheckbox.checked ? '1' : '0');
     
     try {
-        const response = await fetch('/Honra-e-Sombra/app/views/admin/content-management-rpg/handlers/classes_handler.php', {
+        const response = await fetch('<?= SITE_URL ?>/app/views/admin/content-management-rpg/handlers/classes_handler.php', {
             method: 'POST',
             body: formData
         });
